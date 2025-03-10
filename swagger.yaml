@@ -336,19 +336,19 @@ paths:
                       type: string
                     
   /api/bookmarks/{id}:
-    put:
-      tags:
-      - Bookmark
-      summary: "Update bookmark page"
-      parameters:
+    parameters:
         - name: id
-          in: query  
-          description: Input bookmark ID
+          in: path
+          description: id of bookmark
           required: true
           schema:
             type: integer
             required:
             - bookmark_id
+    put:
+      tags:
+      - Bookmark
+      summary: "Update bookmark page"
       responses:
         200:
           description: "Successfuly updated bookmark"
@@ -437,12 +437,21 @@ paths:
                     type: object
   
   /api/restaurantpage/{id}:
+    parameters:
+        - name: id
+          in: path
+          description: id of restaurant
+          required: true
+          schema:
+            type: integer
+            required:
+            - restaurant_id
     put:
       tags: 
         - Restaurant
       description: "Update restaurant information"
       parameters:
-        - name: restaurant_name
+        - name: id
           in: query
           required: true
           schema:
