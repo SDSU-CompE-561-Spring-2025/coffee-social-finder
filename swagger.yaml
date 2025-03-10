@@ -14,6 +14,7 @@ tags:
 - name: "Cosmetic"
 - name: "Restaurant"
 paths:
+
   /api/users:
     get:
       tags: 
@@ -154,6 +155,116 @@ paths:
                   properties:
                     success:
                       type: boolean
+                      
+  /api/commentThreads:
+    get:
+      tags:
+      - Comments
+      summary: "Retrieve a list of comment threads"
+      responses: 
+        200:
+          description: "List of Comments"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    comment_id:
+                      type: integer
+                    created_at:
+                      type: string
+                      format: date-time
+                    restaurant_id:
+                      type: integer
+                    tags_id:
+                      type: integer
+    post:
+      tags: 
+      - Comments
+      summary: "Create a new comment"
+      parameters:
+        - name: Title
+          in: query
+          description: "Title of Comment"
+          required: true
+          schema:
+            type: string
+        - name: Content
+          in: query
+          description: "Input comment description"
+          required: true
+          schema: 
+            type: string
+      responses:
+        200:
+          description: "Comment created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  name:
+                    type: string
+                  content:
+                    type: string
+  /api/commentThreads/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: id of comment to return
+        required: true
+        schema:
+          type: integer
+    put:
+      tags:
+      - Comments
+      summary: "Update comment information"
+      parameters:
+        - name: Comment
+          in: query
+          description: Update Comment text
+          required: true
+          schema:
+            type: string          
+      responses:
+            200:
+              description: "Comment Updated"
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+    delete:
+        tags:
+        - Comments
+        summary: "Delete a comment"
+        parameters:
+          - name: Comment
+            in: query
+            description: Input comment 
+            required: true
+            schema: 
+              type: string
+        responses:
+          200:
+            description: "Comment Deleted"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean        
+                        
+                        
   /api/TagsPage:
     get:
       tags: 
@@ -485,6 +596,7 @@ paths:
                 properties:
                   success:
                     type: boolean
+
 
 
 components:
