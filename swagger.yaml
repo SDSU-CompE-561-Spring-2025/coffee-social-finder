@@ -387,3 +387,120 @@ paths:
                   properties:
                     success:
                       type: boolean
+
+
+  /api/commentThreads:
+    get:
+      tags:
+      - Comments
+      summary: "Retrieve a list of comment threads"
+      responses: 
+        200:
+          description: "List of Comments"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    comment_id:
+                      type: int
+                    created_at:
+                      type: datetime
+                    restaurant_id:
+                      type: int
+                    tags_id:
+                      type: int`
+    post:
+      tags: 
+      - Comments
+      summary: "Create a new comment"
+      parameters:
+        - name: Title
+          in: query
+          description: "Title of Comment"
+          required: true
+          schema:
+            type: string
+            required:
+            - Title
+        - name: Content
+          in: query
+          description: "Input comment description"
+          required: true
+          schema: 
+            type: string
+            required: 
+            - Content
+    response:
+    '200':
+      description: "Comment created"
+      content:
+        application/json:
+          schema:
+            type: array
+            items: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  name:
+                    type: string
+                  content:
+                    type: string
+                
+  /api/commentThreads/{id}:
+    put:
+      tags:
+      - Comments
+      summary: "Update comment information"
+      operationID: updateComment
+      parameters:
+        - name: Comment
+          in: query
+          description: Update Comment info
+          required: true
+          schema:
+            type: string
+            - Comment
+      responses:
+        '200':
+          description: "Comment Updated"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - Comment
+      summary: "Delete a comment"
+      parameters:
+        - name: Comment
+          in: query
+          description: Input comment 
+          required: true
+          schema: 
+          type: string
+          required:
+          - Comment
+    responses:
+      '200':
+        description: "Comment Deleted"
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        
