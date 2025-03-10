@@ -387,6 +387,96 @@ paths:
                     success:
                       type: boolean
 
+  /api/restaurantpage:
+    get:
+      tags: 
+        - Restaurant
+      description: "Retrieve a list of restaurants"
+      parameters:
+        - name: restaurant_name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: address
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "List of restaurants"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                    restaurant_name:
+                      type: string
+                    owner_email:
+                      type: string
+    post:
+      tags: 
+        - Restaurant
+      description: "Create a new restaurant page"
+      responses:
+        201:
+          description: "Successfully created restaurant page"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  restaurant:
+                    type: object
+  
+  /api/restaurantpage/{id}:
+    put:
+      tags: 
+        - Restaurant
+      description: "Update restaurant information"
+      parameters:
+        - name: restaurant_name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: address
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Successfully updated restaurant information"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+    delete:
+      tags: 
+        - Restaurant
+      description: "Delete a restaurant"
+      responses:
+        200:
+          description: "Successfully deleted restaurant"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
 
 components:
   schemas:
