@@ -171,7 +171,7 @@ paths:
     put:
       tags:
       - Filtered Tags
-      summary: "Edit tag preference"
+      summary: "Update tag preference"
       parameters:
         - name: tag
           in: query  
@@ -197,6 +197,88 @@ paths:
       tags:
       - Filtered Tags
       summary: "Delete a tag preference"
+      parameters:
+        - name: tag
+          in: query  
+          description: Input tag
+          required: true
+          schema:
+            type: string
+            required:
+            - tag
+      responses:
+        200:
+          description: "Successfuly deleted user tag preference"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+  /api/cosmetics:
+    get:
+      tags: 
+      - Cosmetic
+      summary: "Retrieve a list of cosmetics"
+      responses: 
+        200: 
+          description: "List of cosmetics"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cosmetic id: 
+                      type: integer
+                    name:
+                      type: string
+                    date aquired:
+                      type: string
+                      format: date-time
+  /api/cosmetics/{id}:
+    put:
+      tags:
+      - Cosmetic
+      summary: "Update profile cosmetics"
+      parameters:
+        - name: cosmetic
+          in: query  
+          description: Input cosmetic id
+          required: true
+          schema:
+            type: integer
+            required:
+            - cosmetic
+      responses:
+        200:
+          description: "Successfuly updated user cosmetic"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - Cosmetic
+      summary: "Delete a user cosmetic"
+      parameters:
+        - name: cosmetic
+          in: query  
+          description: Input cosmetic id
+          required: true
+          schema:
+            type: integer
+            required:
+            - cosmetic
       responses:
         200:
           description: "Successfuly deleted user tag preference"
