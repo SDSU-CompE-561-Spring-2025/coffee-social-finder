@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Swagger Cafe Finder - OpenAPI 3.0
+  description: |-
+    This is a Cafe Finder Server based on the OpenAPI 3.0 specification.
+  version: 1.0.11
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+tags:
+- name: "User"
+- name: "Comments"
+- name: "Bookmark"
+- name: "Filtered Tags"
+- name: "Cosmetic"
+- name: "Restaurant"
+- name: "Address"
+paths:
+  /api/users:
+    get:
+      tags: 
+      - User
+      summary: "Retrieve a list of users"
+      responses: 
+        200: 
+          description: "List of users"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: 
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+                      format: email
+                    password:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    bookmark_id:
+                      type: integer
+                    filtered_tags_id:
+                      type: integer
+                    cosmetics_id:
+                      type: integer
+    post:
+      tags: 
+      - User
+      summary: "Create a new user"
+      requestBody:
+        description: "Input name, email, and password"
+        content:
+          application/json:
+            schema:
+              type: object
+              required: 
+              - name
+              - email
+              - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+        required: true
+      responses:
+        201:
+          description: "Successfuly created user"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    id: 
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+                      format: email
