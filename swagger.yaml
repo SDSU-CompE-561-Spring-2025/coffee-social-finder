@@ -312,3 +312,78 @@ paths:
                   properties:
                     success:
                       type: boolean
+  /api/bookmarks:
+    get:
+      tags: 
+      - Bookmark
+      summary: "Retrieve a list of bookmarks"
+      responses: 
+        200: 
+          description: "List of bookmarks"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    bookmark_id: 
+                      type: integer
+                    name:
+                      type: string
+                    date_bookmarked:
+                      type: string
+                    restaurant_name:
+                      type: string
+                    
+  /api/bookmarks/{id}:
+    put:
+      tags:
+      - Bookmark
+      summary: "Update bookmark page"
+      parameters:
+        - name: bookmark ID
+          in: query  
+          description: Input bookmark ID
+          required: true
+          schema:
+            type: int
+            required:
+            - bookmark_id
+      responses:
+        200:
+          description: "Successfuly updated bookmark"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - Bookmark
+      summary: "Delete a bookmark"
+      parameters:
+        - name: bookmark ID
+          in: query  
+          description: Input bookmark ID
+          required: true
+          schema:
+            type: int
+            required:
+            - bookmark_id
+      responses:
+        200:
+          description: "Successfuly deleted bookmark"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
