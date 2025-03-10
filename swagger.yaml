@@ -13,7 +13,6 @@ tags:
 - name: "Filtered Tags"
 - name: "Cosmetic"
 - name: "Restaurant"
-- name: "Address"
 paths:
   /api/users:
     get:
@@ -342,12 +341,12 @@ paths:
       - Bookmark
       summary: "Update bookmark page"
       parameters:
-        - name: bookmark ID
+        - name: id
           in: query  
           description: Input bookmark ID
           required: true
           schema:
-            type: int
+            type: integer
             required:
             - bookmark_id
       responses:
@@ -367,12 +366,12 @@ paths:
       - Bookmark
       summary: "Delete a bookmark"
       parameters:
-        - name: bookmark ID
+        - name: id
           in: query  
           description: Input bookmark ID
           required: true
           schema:
-            type: int
+            type: integer
             required:
             - bookmark_id
       responses:
@@ -387,3 +386,89 @@ paths:
                   properties:
                     success:
                       type: boolean
+
+
+components:
+  schemas:
+    User:
+      type: object
+      required: [id, name, email, password, created_at]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        bookmarks:
+          type: string
+
+    Restaurant:
+      type: object
+      required: [address, name]
+      properties:
+        id:
+          type: integer
+        address:
+          type: string
+        name:
+          type: string
+        review_rating:
+          type: integer
+        phoneNumber:
+          type: string
+        filtered_tags_id:
+          type: integer
+        comment_id:
+          type: integer
+
+    Address:
+      type: object
+      required: [id, street, city, state, zip]
+      properties:
+        id:
+          type: integer
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+
+    Tags:
+      type: object
+      properties:
+        id:
+          type: integer
+        tags:
+          type: string
+
+    Comments_Reviews:
+      type: object
+      required: [title, comment_id, created_at]
+      properties:
+        title:
+          type: string
+        comment_id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+
+    Cosmetic:
+      type: object
+      properties:
+        cosmetic_ID:
+          type: string
+        name:
+          type: string
+        date_acquired:
+          type: string
+          format: date-time
