@@ -52,25 +52,32 @@ paths:
       tags: 
       - User
       summary: "Create a new user"
-      requestBody:
-        description: "Input name, email, and password"
-        content:
-          application/json:
-            schema:
-              type: object
-              required: 
-              - name
-              - email
-              - password
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-        required: true
+      parameters:
+        - name: name
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            required:
+            - name
+        - name: email
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            format: email
+            required:
+            - email
+        - name: password
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            required:
+            - password
       responses:
         201:
           description: "Successfuly created user"
@@ -90,3 +97,54 @@ paths:
                     email:
                       type: string
                       format: email
+  /api/users/{id}:
+    put:
+      tags:
+      - User
+      summary: "Edit user information"
+      parameters:
+        - name: name
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            required:
+            - name
+        - name: email
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            format: email
+            required:
+            - email
+      responses:
+        200:
+          description: "Successfuly updated user"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - User
+      summary: "Delete a user"
+      responses:
+        200:
+          description: "Successfuly deleted user"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
