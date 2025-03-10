@@ -148,3 +148,64 @@ paths:
                   properties:
                     success:
                       type: boolean
+  /api/TagsPage:
+    get:
+      tags: 
+      - Filtered Tags
+      summary: "Retrieve a list of tags"
+      responses: 
+        200: 
+          description: "List of users"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag: 
+                      type: string
+                    id:
+                      type: integer
+  /api/TagsPage/{id}:
+    put:
+      tags:
+      - Filtered Tags
+      summary: "Edit tag preference"
+      parameters:
+        - name: tag
+          in: query  
+          description: Input tag
+          required: true
+          schema:
+            type: string
+            required:
+            - tag
+      responses:
+        200:
+          description: "Successfuly updated user tag preference"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - Filtered Tags
+      summary: "Delete a tag preference"
+      responses:
+        200:
+          description: "Successfuly deleted user tag preference"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
