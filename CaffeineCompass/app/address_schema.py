@@ -6,6 +6,12 @@ class AddressBase(BaseModel):
     state: str
     zip: str
 
+class AddressCreate(AddressBase):
+    pass
+
+class AddressUpdate(AddressBase):
+    pass
+
 class Address(AddressBase):
     address_id: int
 
