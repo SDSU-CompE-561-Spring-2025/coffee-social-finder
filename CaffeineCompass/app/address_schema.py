@@ -1,16 +1,13 @@
 from pydantic import BaseModel
 
-class UserBase(BaseModel):
-    name: str
-    email: str
+class AddressBase(BaseModel):
+    street: str
+    city: str
+    state: str
+    zip: str
 
-class UserCreate(UserBase):
-    password: str
-
-class User(UserBase):
-    id: int
+class Address(AddressBase):
+    address_id: int
 
     class Config:
         orm_mode = True
-
-        #added a comment new
