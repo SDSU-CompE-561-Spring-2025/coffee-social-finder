@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.schemas.cosmetic import Cosmetic, CosmeticCreate, CosmeticUpdate
 from app.crud.cosmetic import get_cosmetic, create_cosmetic, update_cosmetic, delete_cosmetic
-from app.db.database import get_db
+from app.database import get_db
 
 router = APIRouter(prefix="/cosmetics", tags=["cosmetics"])
 
