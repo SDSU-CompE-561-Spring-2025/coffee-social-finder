@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+# same schema as old one (Malak's)
 
 class RestaurantBase(BaseModel):
     address: str
@@ -19,4 +20,3 @@ class Restaurant(RestaurantBase):
 
     class Config:
         orm_mode = True
-
