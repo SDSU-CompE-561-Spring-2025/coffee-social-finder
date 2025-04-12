@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.schemas.restaurant import Restaurant, RestaurantCreate, RestaurantUpdate
 from app.crud.restaurant import get_restaurant, create_restaurant, update_restaurant, delete_restaurant
-from app.db.database import get_db
+from app.database import get_db
 
 router = APIRouter(prefix="/restaurants", tags=["restaurants"])
 
