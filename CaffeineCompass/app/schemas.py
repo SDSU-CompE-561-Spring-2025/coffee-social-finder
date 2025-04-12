@@ -34,6 +34,7 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
+"""
 class RestaurantBase(BaseModel):
     address: str
     name: str
@@ -45,7 +46,25 @@ class RestaurantBase(BaseModel):
 class RestaurantCreate(RestaurantBase):
     pass
 
-class RestaurantUpdate(RestaurantBase):
+class Restaurant(RestaurantBase):
+    restaurant_id: int
+
+    class Config:
+        orm_mode = True
+"""
+
+class RestaurantBase(BaseModel):
+    address: str
+    name: str
+    rating: float
+    phonenumber: str
+    filtered_tags_id: int
+    comment_id: int
+
+class RestaurantCreate(RestaurantBase):
+    pass
+
+class RestaurantUpdate(RestaurantBase): #added this
     pass
 
 class Restaurant(RestaurantBase):
