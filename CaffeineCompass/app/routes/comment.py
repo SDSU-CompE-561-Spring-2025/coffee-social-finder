@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.schemas.comment import Comment, CommentCreate, CommentUpdate
 from app.crud.comment import get_comment, create_comment, update_comment, delete_comment
-from app.db.database import get_db
+from app.database import get_db
 
 router = APIRouter(prefix="/comments", tags=["comments"])
 
