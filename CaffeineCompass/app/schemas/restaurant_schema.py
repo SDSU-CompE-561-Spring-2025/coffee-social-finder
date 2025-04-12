@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-# same schema as old one (Malak's)
+# this is malak's code
 
 class RestaurantBase(BaseModel):
     address: str
