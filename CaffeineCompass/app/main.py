@@ -1,15 +1,16 @@
 from fastapi import FastAPI, status, Depends, HTTPException, Request
 from app.core.database import engine, Base
-from app.core.auth import auth
 from app.routes import user, restaurant, comment, tag, bookmark, cosmetic, address
 from sqlalchemy.orm import Session
 import time
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
 from fastapi.security import OAuth2PasswordBearer
+from app.core.auth import router as auth_router
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -37,7 +38,7 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 app.include_router(user.router)
-app.include_router(auth.router)
+app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(restaurant.router)
 app.include_router(comment.router)
 app.include_router(tag.router)
