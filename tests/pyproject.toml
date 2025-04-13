@@ -1,0 +1,79 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "CaffeineCompass"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Vince Gonzales", email = "filmspiredco@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "bandit>=1.8.3",
+  "fastapi[all]",
+  "hatch>=1.14.0",
+  "passlib[bcrypt]>=1.7.4",
+  "pre-commit>=4.1.0",
+  "pydantic-settings>=2.8.1",
+  "pyjwt>=2.10.1",
+  "python-dotenv>=1.0.1",
+  "ruff>=0.9.7",
+  "sqlalchemy>=2.0.39",
+  "uvicorn>=0.33.0",
+]
+
+[tool.hatch.version]
+path = "src/CaffeineCompass/__about__.py"
+
+[tool.hatch.envs.default]
+# Default environment settings
+python = "3.12"
+installer = "uv"
+path = ".venv"
+
+[tool.hatch.envs.default.scripts]
+# Default environment scripts for development and database operations
+dev = "fastapi dev {args:src/CaffeineCompass/main.py}"
+
+[tool.hatch.envs.types]
+installer = "uv"
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/CaffeineCompass tests}"
+
+[tool.coverage.run]
+source_pkgs = ["CaffeineCompass", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/CaffeineCompass/__about__.py",
+]
+
+[tool.coverage.paths]
+CaffeineCompass = ["src/CaffeineCompass", "*/CaffeineCompass/src/CaffeineCompass"]
+tests = ["tests", "*/CaffeineCompass/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
