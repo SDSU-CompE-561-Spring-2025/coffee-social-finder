@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+# this is malak's code
 
 class RestaurantBase(BaseModel):
     address: str
@@ -9,6 +10,9 @@ class RestaurantBase(BaseModel):
     comment_id: int
 
 class RestaurantCreate(RestaurantBase):
+    pass
+
+class RestaurantUpdate(RestaurantBase):
     pass
 
 class Restaurant(RestaurantBase):
