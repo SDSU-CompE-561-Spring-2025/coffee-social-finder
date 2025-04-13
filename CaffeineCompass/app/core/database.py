@@ -1,5 +1,19 @@
 from sqlalchemy import create_engine
-# ... (whatever else)
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, Session
 
-def get_db(): # api endpoints (routes) are created assuming this function exists, is named this, and that 'database.py' is kept in current location. be sure to change import location of every route if any part of this is altered
-  #... (whatever else)
+SQLALCHEMY_DATABASE_URL = "sqlite:///./coffee.db"  
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+engine  = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}) 
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Base = declarative_base()

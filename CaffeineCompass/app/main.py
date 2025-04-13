@@ -1,12 +1,17 @@
 from fastapi import FastAPI, status, Depends, HTTPException, Request
-from app.core.database import engine, Base, get_db
-from app.routes import auth,user, restaurant, comment, tag, bookmark, cosmetic, address
+from app.core.database import engine, Base
+from app.core.auth import auth
+from app.routes import user, restaurant, comment, tag, bookmark, cosmetic, address
 from sqlalchemy.orm import Session
 import time
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Annotated
+from fastapi.security import OAuth2PasswordBearer
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -40,8 +45,6 @@ app.include_router(bookmark.router)
 app.include_router(cosmetic.router)
 app.include_router(address.router)
 
-@app.get("/", status_code=status.HTTP_200_OK)
-async def user(token: str = Depends(auth.oauth2_scheme)):
-    if user is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
-    return {"message": "Welcome to Caffeine Compass!"}
+@app.get("/health", status_code=status.HTTP_200_OK)
+async def health_check(token: Annotated[str, Depends(oauth2_scheme)]):
+    return {"token": token}

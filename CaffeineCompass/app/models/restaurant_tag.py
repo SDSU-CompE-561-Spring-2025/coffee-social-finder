@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import relationship
-from database import Base
+from app.core.database import Base
 
 restaurant_tag_association = Table(
     "restaurant_tag",
