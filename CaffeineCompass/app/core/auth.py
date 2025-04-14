@@ -28,6 +28,7 @@ class CreateUser(BaseModel):
     password: str
     created_at: datetime = datetime.now()
 
+
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -55,7 +56,8 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password")
+            detail="Incorrect username or password"
+            )
     token = create_access_token(user.username, user.id, timedelta(minutes=30))
     return {"access_token": token, "token_type": "bearer"}
 

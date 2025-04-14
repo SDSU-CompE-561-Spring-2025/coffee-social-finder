@@ -1,15 +1,13 @@
 from functools import lru_cache
-
 from dotenv import load_dotenv
-import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 load_dotenv()
 
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "sqlite:///./coffee.db"
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "default_secret_key")
+    DATABASE_URL: str = "sqlite:///./app.db"
+    SECRET_KEY: str = "BADEDFF871BF9A65B4A18A53328F4"
     
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
