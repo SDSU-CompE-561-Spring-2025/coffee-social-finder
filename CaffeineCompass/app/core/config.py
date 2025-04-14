@@ -6,7 +6,7 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "sqlite:///./app.db"
+    DATABASE_URL: str = "sqlite:///./coffee.db"
     SECRET_KEY: str = "BADEDFF871BF9A65B4A18A53328F4"
     
 
