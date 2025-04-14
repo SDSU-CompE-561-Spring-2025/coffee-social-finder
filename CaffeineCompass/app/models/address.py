@@ -13,4 +13,5 @@ class Address(Base):
     state = Column(String(2), nullable = False)
     zip = Column(String(10), nullable = False)
 
+    # comment this out for the test to work
     user = relationship("User", back_populates = "address")
