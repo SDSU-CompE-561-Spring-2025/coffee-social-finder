@@ -1,0 +1,1 @@
+Files used in the core folder are used for FastAPI and help access database and securit information.
