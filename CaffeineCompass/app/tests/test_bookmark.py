@@ -2,7 +2,6 @@ import pytest
 from app.models.bookmark import Bookmark
 
 # test fails if relationships are not commented out
-
 def test_bookmark():
     bookmark = Bookmark(
         id=1,

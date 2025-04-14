@@ -1,6 +1,7 @@
 import pytest
 from app.models.user import User
 
+# test fails if relationships are not commented out
 def test_user():
     user = User(
         id = 1,

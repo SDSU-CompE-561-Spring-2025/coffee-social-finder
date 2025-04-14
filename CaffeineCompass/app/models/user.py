@@ -13,6 +13,7 @@ class User(Base):
     password = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    #   comment this out for the test to work   
     cosmetics = relationship("Cosmetic", back_populates = "user")
     comments = relationship("Comment", back_populates = "user")
     bookmarks = relationship("Bookmark", back_populates= "user")

@@ -12,5 +12,6 @@ class Bookmark(Base):
     user_id = Column(Integer, ForeignKey('user_account.id'), index = True)
     restaurant_id = Column(Integer, ForeignKey('restaurant.id'), index = True)
 
+    #   comment this out for the test to work   
     user = relationship("User", back_populates = "bookmarks")
     restaurant = relationship("Restaurant", back_populates= "bookmarks")
