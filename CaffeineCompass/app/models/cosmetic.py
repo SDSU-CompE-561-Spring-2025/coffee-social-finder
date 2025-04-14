@@ -12,4 +12,5 @@ class Cosmetic(Base):
     date_acquired = Column(DateTime, default=datetime.utcnow)
     user_id  = Column(Integer, ForeignKey('user_account.id'), index = True)
 
+    #   comment this out for the test to work
     user = relationship("User", back_populates = "cosmetics")
