@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import datetime
-from app.models import Cosmetic
+from app.models.cosmetic import Cosmetic
 
 def get_cosmetic(db: Session, cosmetic_id: int):
     return db.query(Cosmetic).filter(Cosmetic.id == cosmetic_id).first()

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from typing import Optional
-from app.models import Restaurant
+from app.models.restaurant_tag import Restaurant
 
 def get_restaurant(db: Session, restaurant_id: int):
     return db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id).first()
