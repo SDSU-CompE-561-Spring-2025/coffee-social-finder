@@ -1,0 +1,1 @@
+Project Overview: We created a full stack web application using Python FastAPI. Our project idea was on creating a website for users to chat, view restaurants, and find relatable posts (tags) that suit them. Using FastAPI, we created models, routes, and schemas from our Backend Wireframe and Models document. 
