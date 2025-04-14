@@ -18,6 +18,7 @@ class Restaurant(Base):
     rating = Column(Integer)
     phone_number = Column(String(15))
 
+    #   comment this out for the test to work
     tags = relationship("Tag",secondary= restaurant_tag_association, back_populates = "restaurants")
     comments = relationship("Comment", back_populates = "restaurant")
     bookmarks = relationship("Bookmark", back_populates="restaurant")
@@ -28,5 +29,6 @@ class Tag(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(50), unique = True, nullable= False)
 
+    #   comment this out for the test to work
     restaurants = relationship("Restaurant",secondary= restaurant_tag_association, back_populates = "tags")
     comments = relationship("Comment", back_populates = "tags")
