@@ -7,8 +7,9 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
-    DATABASE_URL: str
-    SECRET_KEY: str
+    DATABASE_URL: str = "sqlite:///./coffee.db"
+    SECRET_KEY: str = "p;KCUAz)pNax=fb"
+    
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

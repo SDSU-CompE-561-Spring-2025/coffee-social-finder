@@ -10,15 +10,17 @@ from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from app.models.user import User
 from app.core.database import SessionLocal
+from app.core.config import settings
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-SECRET_KEY = 'p;KCUAz)pNax=fb'
+SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")   
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 class CreateUser(BaseModel):
     username: str
@@ -29,13 +31,6 @@ class CreateUser(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
@@ -49,6 +44,8 @@ async def create_user(db: db_dependency, create_user_request: CreateUser):
     )
     db.add(user)
     db.commit()
+    db.refresh(user)
+    return {"message": "User created successfully", "user": user}
 
 
 @router.post("/token", response_model=Token)
@@ -60,7 +57,6 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password")
     token = create_access_token(user.username, user.id, timedelta(minutes=30))
-
     return {"access_token": token, "token_type": "bearer"}
 
 def authenticate_user(username: str, password: str, db):

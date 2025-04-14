@@ -12,13 +12,15 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8080",
+    "https://CaffeineCompass.com",
+    "https://www.CaffeineCompass.com",
 ]
 
 app.add_middleware(
@@ -37,15 +39,11 @@ async def add_process_time_header(request: Request, call_next):
     response.headers["X-Process-Time"] = str(process_time)
     return response
 
-app.include_router(user.router)
-app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
-app.include_router(restaurant.router)
-app.include_router(comment.router)
-app.include_router(tag.router)
-app.include_router(bookmark.router)
-app.include_router(cosmetic.router)
-app.include_router(address.router)
-
-@app.get("/health", status_code=status.HTTP_200_OK)
-async def health_check(token: Annotated[str, Depends(oauth2_scheme)]):
-    return {"token": token}
+app.include_router(user.router, prefix="/users")
+app.include_router(auth_router, prefix="/auth")
+app.include_router(restaurant.router, prefix="/restaurants")
+app.include_router(comment.router, prefix="/comments")
+app.include_router(tag.router, prefix="/tags")
+app.include_router(bookmark.router, prefix="/bookmarks")
+app.include_router(cosmetic.router, prefix="/cosmetics")
+app.include_router(address.router, prefix="/addresses")
