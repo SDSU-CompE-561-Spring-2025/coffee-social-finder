@@ -15,7 +15,7 @@ class Comment(Base):
     restaurant_id = Column(Integer, ForeignKey('restaurant.id'), index = True)
     user_id = Column(Integer, ForeignKey('user_account.id'), index = True)
 
-
+    #   comment this out for the test to work   
     user = relationship("User", back_populates= "comments")
     restaurant   = relationship("Restaurant", back_populates= "comments")
     tags = relationship("Tag", back_populates= "comments")
