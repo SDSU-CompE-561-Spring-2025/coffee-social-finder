@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from typing import Optional
-from app.models.address import Address
+from app.models import Address
 
 def get_address(db: Session, address_id: int):
     return db.query(Address).filter(Address.address_id == address_id).first()

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import datetime
-from app.models.comment import Comment
+from app.models import Comment
 
 def get_comment(db: Session, comment_id: int):
     return db.query(Comment).filter(Comment.comment_id == comment_id).first()

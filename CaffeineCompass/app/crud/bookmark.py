@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import datetime
-from app.models.bookmark import Bookmark
+from app.models import Bookmark
 
 def get_bookmark(db: Session, bookmark_id: int):
     return db.query(Bookmark).filter(Bookmark.bookmark_id == bookmark_id).first()
