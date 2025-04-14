@@ -1,10 +1,10 @@
-from .user_schema import User, UserCreate, UserUpdate
-from .restaurant_schema import Restaurant, RestaurantCreate, RestaurantUpdate
-from .comment_schema import Comment, CommentCreate, CommentUpdate
-from .tag_schema import Tag, TagCreate, TagUpdate
-from .bookmark_schema import Bookmark, BookmarkCreate, BookmarkUpdate
-from .cosmetic_schema import Cosmetic, CosmeticCreate, CosmeticUpdate
-from .address_schema import Address, AddressCreate, AddressUpdate
+from .user import User, UserCreate, UserUpdate
+from .restaurant import Restaurant, RestaurantCreate, RestaurantUpdate
+from .comment import Comment, CommentCreate, CommentUpdate
+from .tag import Tag, TagCreate, TagUpdate
+from .bookmark import Bookmark, BookmarkCreate, BookmarkUpdate
+from .cosmetic import Cosmetic, CosmeticCreate, CosmeticUpdate
+from .address import Address, AddressCreate, AddressUpdate
 
 __all__ = [
     "User", "UserCreate", "UserUpdate",
