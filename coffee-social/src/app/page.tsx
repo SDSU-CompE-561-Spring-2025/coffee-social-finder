@@ -1,103 +1,129 @@
-import Image from "next/image";
+import Image from "next/image"
+import Link from "next/link"
 
-export default function Home() {
+export default function RestaurantPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-[#e8dbb7]">
+      {/* Navigation Bar - Modified to shift options to the right */}
+      <nav className="flex items-center bg-[#3a3a2e] p-4">
+        {/* Logo on the left */}
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/placeholder.svg?height=50&width=50"
+            alt="Restaurant Logo"
+            width={50}
+            height={50}
+            className="rounded-full border-2 border-[#e8dbb7]"
+          />
+        </Link>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        {/* Spacer to push everything else to the right */}
+        <div className="flex-grow"></div>
+
+        {/* Navigation links now on the right */}
+        <div className="hidden space-x-6 md:flex mr-6">
+          <Link href="#" className="text-[#F5DEB3] hover:text-white">
+            Cafes
+          </Link>
+          <Link href="#" className="text-[#F5DEB3] hover:text-white">
+            Bookmarks
+          </Link>
+          <Link href="#" className="text-[#F5DEB3] hover:text-white">
+            Cosmetics
+          </Link>
+          <Link href="#" className="text-[#F5DEB3] hover:text-white">
+            Account
+          </Link>
+          <Link href="#" className="text-[#F5DEB3] hover:text-white">
+            Link
+          </Link>
+        </div>
+
+        {/* Sign in/Register buttons remain on the far right */}
+        <div className="flex space-x-2">
+          <button className="rounded-md border border-[#e8dbb7] bg-transparent px-4 py-2 text-[#F5DEB3] hover:bg-[#e8dbb7] hover:text-[#3a3a2e]">
+            Sign In
+          </button>
+          <button className="rounded-md bg-[#e8dbb7] px-4 py-2 text-[#4B3621] hover:bg-[#d6c9a5]">Register</button>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="container mx-auto p-4">
+        <h1 className="mb-6 text-3xl font-bold text-[#5E6747]">Mandarin Beijing</h1>
+
+        <div className="grid gap-8 md:grid-cols-2">
+          {/* Restaurant Image */}
+          <div className="overflow-hidden rounded-lg border-4 border-[#3a3a2e]">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/placeholder.svg?height=400&width=600"
+              alt="Restaurant Interior"
+              width={600}
+              height={400}
+              className="h-full w-full object-cover"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+
+          {/* Restaurant Info */}
+          <div>
+            <div className="mb-4">
+              <h2 className="text-2xl font-bold text-[#5E6747]">User Rating:</h2>
+              <div className="mt-2 flex">
+                {/* Simple star rating using text characters instead of Lucide icons */}
+                <div className="flex">
+                  <span className="text-2xl">5 Stars</span>
+                  
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold text-[#5E6747]">About the Restaurant:</h2>
+              <p className="mt-2 text-[#4B3621]">
+                Mandarin Beijing offers the most authentic and fresh Chinese food than anyone can offer, we care about
+                our customers and we love their feedback. We truly believe good food can change a person's bad day into
+                a great day. Give us a chance to satisfy your cravings.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="mt-8">
+          <h2 className="mb-4 text-2xl font-bold text-[#5E6747]">Related Reviews:</h2>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2].map((review) => (
+              <div key={review} className="rounded-lg bg-white p-4 shadow-md">
+                <div className="mb-2 flex items-center gap-2">
+                  <div className="h-10 w-10 rounded-full bg-gray-200"></div>
+                  <div>
+                    <h3 className="font-semibold">Title</h3>
+                    <p className="text-sm text-gray-500">Description</p>
+                  </div>
+                </div>
+                <p className="text-gray-700">
+                  The food was amazing! I especially loved the Peking duck and the service was excellent.
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tags Section */}
+        <div className="mt-8">
+          <h2 className="mb-2 text-lg font-semibold text-[#5E6747]">Related Tags:</h2>
+          <div className="flex flex-wrap gap-2">
+            <span className="rounded-full bg-[#3a3a2e] px-3 py-1 text-sm text-white">Tag</span>
+            <span className="rounded-full bg-[#3a3a2e] px-3 py-1 text-sm text-white">Tag</span>
+            <span className="rounded-full bg-[#3a3a2e] px-3 py-1 text-sm text-white">Tag</span>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="mt-12 border-t border-[#3a3a2e] bg-[#e8dbb7] p-4 text-center text-[#4B3621]">
+        <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
       </footer>
     </div>
-  );
+  )
 }
