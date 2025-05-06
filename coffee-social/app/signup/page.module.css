@@ -1,0 +1,99 @@
+.signupPage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #d5c69f;
+    margin: 0;
+  }
+  
+  .signupHeader {
+    background: #6b734c;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .signupHeader h1 {
+    margin: 0;
+    font-family: 'Brush Script MT', cursive;
+    font-size: 3rem;
+    color: #fff;
+  }
+  
+  .signupMain {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem;
+  }
+  
+  .signupMain h2 {
+    margin-bottom: 1rem;
+    color: #7d6e53;
+  }
+  
+  .formContainer {
+    background: #7d5831;
+    padding: 2rem;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+  }
+  
+  .signupForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signupForm label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    color: #d5c69f;
+    font-size: 0.9rem;
+  }
+  
+  /* give inputs a light background so they stand out */
+.signupForm input {
+    background-color: #f0f0f0;  /* light grey */
+    color: #333;                /* dark text */
+    border: 1px solid #ccc;     /* subtle border */
+  }
+  
+ 
+  .signupForm button {
+    background-color: #fff;     /* white */
+    color: #556B2F;             
+    border: 2px solid #556B2F;  /* match text */
+    border-radius: 4px;
+    padding: 0.75rem;
+    cursor: pointer;
+  }
+  
+  /* hover state */
+  .signupForm button:hover {
+    background-color: #f4f4f4;  /* very light grey */
+  }
+  
+  .loginCta {
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  
+  .loginCta a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  
+  .signupFooter {
+    background: #6b734c;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 2rem;
+  }
+  
+  .signupFooter a,
+  .signupFooter span {
+    color: #fbfbfb;
+    text-decoration: none;
+  }
+  

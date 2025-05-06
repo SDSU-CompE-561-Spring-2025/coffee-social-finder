@@ -1,0 +1,128 @@
+.loginPage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #d5c69f;
+    margin: 0;
+  }
+  
+  .loginHeader {
+    background: #6b734c;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .loginHeader h1 {
+    margin: 0;
+    font-family: 'Brush Script MT', cursive;
+    font-size: 3rem;
+    color: #fff;
+  }
+  
+  .loginMain {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 2rem;
+  }
+  
+  .formWrapper {
+    position: relative;
+    background: #7d5831;
+    padding: 2rem;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+  }
+  
+  .tab {
+    position: absolute;
+    top: -1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #492e0d;
+    padding: 0.5rem 1rem;
+    border-radius: 4px 4px 0 0;
+  }
+  
+  .tab a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .loginForm label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    color: #d5c69f;
+    font-size: 0.9rem;
+  }
+  
+ /* give inputs a light background so they stand out */
+.loginForm input {
+    background-color: #f0f0f0;  /* light grey */
+    color: lch(21.8% 0.46 19.03);                /* dark text */
+    border: 1px solid #ccc;     /* subtle border */
+  }
+  
+  
+  .loginform button {
+    background-color: #fff;     /* white */
+    color: #556B2F;             
+    border: 2px solid #556B2F;  /* match text */
+    border-radius: 4px;
+    padding: 0.75rem;
+    cursor: pointer;
+  }
+  
+  /* hover state */
+  .loginform button:hover {
+    background-color: #f4f4f4;  /* very light grey */
+  }
+  
+  .signInLink {
+    display: block;           /* make it take its own line */
+    margin-top: 1rem;         /* space above */
+    color: #fff;              /* white text */
+    text-decoration: underline;
+    font-size: 1rem;          /* adjust size if you like */
+    text-align: center;       /* center within form */
+  }
+  
+  .signInLink:hover {
+    opacity: 0.8;             /* subtle hover effect */
+  }
+  
+  .forgotPassword {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #d5c69f;
+    text-decoration: underline;
+  }
+  
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loginFooter {
+    background: #6b734c;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 2rem;
+  }
+  
+  .loginFooter a,
+  .loginFooter span {
+    color: #f6f0f0;
+    text-decoration: none;
+  }
+  
