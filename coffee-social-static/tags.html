@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tags | Caffeine Compass</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">Caffeine Compass</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="restaurants.html">Restaurants</a></li>
+          <li><a href="tags.html" class="active">Tags</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="py-8">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">Browse by Tag</h1>
+        <p class="text-gray-600">Find coffee shops by category</p>
+      </div>
+
+      <div class="tags-grid">
+        <!-- Tag Card 1 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Cozy</h2>
+            <p class="text-gray-600 mb-4">3 shops</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 2 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">WiFi</h2>
+            <p class="text-gray-600 mb-4">4 shops</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 3 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Quiet</h2>
+            <p class="text-gray-600 mb-4">2 shops</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 4 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Lively</h2>
+            <p class="text-gray-600 mb-4">2 shops</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 5 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Outdoor</h2>
+            <p class="text-gray-600 mb-4">1 shop</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 6 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Artisan</h2>
+            <p class="text-gray-600 mb-4">2 shops</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 7 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Food</h2>
+            <p class="text-gray-600 mb-4">3 shops</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 8 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Breakfast</h2>
+            <p class="text-gray-600 mb-4">2 shops</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 9 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Quick</h2>
+            <p class="text-gray-600 mb-4">1 shop</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 10 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Drive-thru</h2>
+            <p class="text-gray-600 mb-4">1 shop</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 11 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Pastries</h2>
+            <p class="text-gray-600 mb-4">2 shops</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+
+        <!-- Tag Card 12 -->
+        <div class="card">
+          <div class="card-content" style="text-align: center;">
+            <h2 class="text-xl font-bold text-amber-800 mb-2">Study</h2>
+            <p class="text-gray-600 mb-4">1 shop</p>
+            <a href="#" class="view-details">View Shops →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Caffeine Compass. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

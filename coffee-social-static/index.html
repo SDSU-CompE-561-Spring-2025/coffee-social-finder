@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caffeine Compass</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">Caffeine Compass</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="restaurants.html">Restaurants</a></li>
+          <li><a href="tags.html">Tags</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Caffeine Compass</h1>
+      <p class="hero-text">Discover the perfect coffee spot for your mood, work, or social gathering.</p>
+      <div class="hero-buttons">
+        <a href="restaurants.html" class="btn btn-primary">Browse Coffee Shops</a>
+        <a href="tags.html" class="btn btn-secondary">Browse by Tag</a>
+      </div>
+    </section>
+
+    <!-- Featured Restaurants Section -->
+    <section class="featured-section">
+      <div class="section-header">
+        <h2>Featured Coffee Shops</h2>
+        <a href="restaurants.html" class="view-all">View All →</a>
+      </div>
+      <div class="restaurant-grid">
+        <!-- Restaurant Card 1 -->
+        <div class="card">
+          <div class="card-content">
+            <h3>The Coffee House</h3>
+            <div class="rating">
+              <span class="star">★</span>
+              <span>4.8</span>
+            </div>
+            <p class="address">123 Main St, Anytown, USA</p>
+            <div class="tags">
+              <span class="tag">Cozy</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Quiet</span>
+            </div>
+            <a href="#" class="view-details">View Details →</a>
+          </div>
+        </div>
+        
+        <!-- Restaurant Card 2 -->
+        <div class="card">
+          <div class="card-content">
+            <h3>Brew & Bean</h3>
+            <div class="rating">
+              <span class="star">★</span>
+              <span>4.5</span>
+            </div>
+            <p class="address">456 Oak Ave, Somewhere, USA</p>
+            <div class="tags">
+              <span class="tag">Lively</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Food</span>
+            </div>
+            <a href="#" class="view-details">View Details →</a>
+          </div>
+        </div>
+        
+        <!-- Restaurant Card 3 -->
+        <div class="card">
+          <div class="card-content">
+            <h3>Morning Grind</h3>
+            <div class="rating">
+              <span class="star">★</span>
+              <span>4.7</span>
+            </div>
+            <p class="address">789 Pine Rd, Elsewhere, USA</p>
+            <div class="tags">
+              <span class="tag">Outdoor</span>
+              <span class="tag">Breakfast</span>
+              <span class="tag">Artisan</span>
+            </div>
+            <a href="#" class="view-details">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Popular Tags Section -->
+    <section class="tags-section">
+      <div class="section-header">
+        <h2>Popular Tags</h2>
+        <a href="tags.html" class="view-all">View All →</a>
+      </div>
+      <div class="tags-grid">
+        <a href="#" class="tag-card">Cozy</a>
+        <a href="#" class="tag-card">WiFi</a>
+        <a href="#" class="tag-card">Quiet</a>
+        <a href="#" class="tag-card">Lively</a>
+        <a href="#" class="tag-card">Outdoor</a>
+        <a href="#" class="tag-card">Artisan</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Caffeine Compass. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
