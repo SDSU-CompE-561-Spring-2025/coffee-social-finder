@@ -10,5 +10,3 @@ A full-stack web application for discovering and sharing coffee shops. This proj
 - `coffee-social/` - Next.js frontend application
 - `coffee-social-static/` - Static HTML/CSS implementation
 - `CaffeineCompass/` - Python FastAPI backend
-## Getting Started
-See the individual README files in each directory for specific setup and running instructions.
