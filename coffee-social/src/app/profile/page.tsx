@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Clock } from 'lucide';
+import { Clock } from 'lucide-react';
 
 export default function Home() {
   return (
