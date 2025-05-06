@@ -1,0 +1,67 @@
+[
+  {
+    "checked": true,
+    "description": "This is your public display name.",
+    "disabled": false,
+    "label": "Display Name",
+    "name": "forumUsers",
+    "placeholder": "John/Jane Doe",
+    "required": true,
+    "rowIndex": 0,
+    "type": "text",
+    "value": "",
+    "variant": "Input",
+    "className": "forumName",
+    "min": 0,
+    "max": 64
+  },
+  {
+    "checked": true,
+    "description": "Messages are limited to 500 characters.",
+    "disabled": false,
+    "label": "Title",
+    "name": "forumMessages",
+    "placeholder": "Express yourself!",
+    "required": true,
+    "rowIndex": 0,
+    "type": "",
+    "value": "",
+    "variant": "Textarea",
+    "className": "forumDiscussion"
+  },
+  [
+    {
+      "checked": true,
+      "description": "Add some tags to make your review easier to find!",
+      "disabled": false,
+      "label": "Tags",
+      "name": "forumTags",
+      "placeholder": "Coffee, Service, Vibes",
+      "required": false,
+      "rowIndex": 0,
+      "type": "",
+      "value": "",
+      "variant": "Tags Input",
+      "className": "forumTags",
+      "max": 24
+    }
+  ],
+  [
+    {
+      "checked": true,
+      "description": "Select an image to upload!",
+      "disabled": false,
+      "label": "Add An Image",
+      "name": "ForumImageData",
+      "placeholder": "Placeholder",
+      "required": false,
+      "rowIndex": 0,
+      "type": "",
+      "value": "",
+      "variant": "File Input",
+      "className": "forumImage",
+      "max": 4,
+      "min": 0
+    }
+  ]
+]
