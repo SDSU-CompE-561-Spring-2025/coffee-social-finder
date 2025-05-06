@@ -4,49 +4,6 @@ import Link from "next/link"
 export default function RestaurantPage() {
   return (
     <div className="min-h-screen bg-[#e8dbb7]">
-      {/* Navigation Bar - Modified to shift options to the right */}
-      <nav className="flex items-center bg-[#3a3a2e] p-4">
-        {/* Logo on the left */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/placeholder.svg?height=50&width=50"
-            alt="Restaurant Logo"
-            width={50}
-            height={50}
-            className="rounded-full border-2 border-[#e8dbb7]"
-          />
-        </Link>
-
-        {/* Spacer to push everything else to the right */}
-        <div className="flex-grow"></div>
-
-        {/* Navigation links now on the right */}
-        <div className="hidden space-x-6 md:flex mr-6">
-          <Link href="#" className="text-[#F5DEB3] hover:text-white">
-            Cafes
-          </Link>
-          <Link href="#" className="text-[#F5DEB3] hover:text-white">
-            Bookmarks
-          </Link>
-          <Link href="#" className="text-[#F5DEB3] hover:text-white">
-            Cosmetics
-          </Link>
-          <Link href="#" className="text-[#F5DEB3] hover:text-white">
-            Account
-          </Link>
-          <Link href="#" className="text-[#F5DEB3] hover:text-white">
-            Link
-          </Link>
-        </div>
-
-        {/* Sign in/Register buttons remain on the far right */}
-        <div className="flex space-x-2">
-          <button className="rounded-md border border-[#e8dbb7] bg-transparent px-4 py-2 text-[#F5DEB3] hover:bg-[#e8dbb7] hover:text-[#3a3a2e]">
-            Sign In
-          </button>
-          <button className="rounded-md bg-[#e8dbb7] px-4 py-2 text-[#4B3621] hover:bg-[#d6c9a5]">Register</button>
-        </div>
-      </nav>
 
       {/* Main Content */}
       <main className="container mx-auto p-4">
@@ -119,11 +76,6 @@ export default function RestaurantPage() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="mt-12 border-t border-[#3a3a2e] bg-[#e8dbb7] p-4 text-center text-[#4B3621]">
-        <p>&copy; {new Date().getFullYear()} All rights reserved.</p>
-      </footer>
     </div>
   )
 }

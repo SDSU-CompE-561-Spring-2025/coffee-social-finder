@@ -3,21 +3,21 @@ import Link from "next/link"
 
 export default function Navbar() {
   return (
-    <nav className="bg-[#5D6748] p-2 flex items-center justify-between">
-      <div className="flex items-center">
-        <Image src="/assets/coffeecompass.png" alt="Compass Logo" width={60} height={60} className="mr-2" />
+    <nav className="bg-[#5D6748] p-1 flex items-center justify-between">
+      <div className="flex items-left">
+        <Image src="/assets/coffeecompass.png" alt="Compass Logo" width={200} height={100} className="mr-2" />
       </div>
       <div className="flex items-center space-x-4 text-white">
         <Link href="/map" className="hover:underline">
           Map
         </Link>
-        <Link href="/cafes" className="hover:underline">
+        <Link href="/restaurant" className="hover:underline">
           Cafes
         </Link>
         <Link href="/bookmarks" className="hover:underline">
           Bookmarks
         </Link>
-        <Link href="/account" className="hover:underline">
+        <Link href="/profile" className="hover:underline">
           Profile
         </Link>
         <button className="bg-white text-black px-3 py-1 rounded text-sm">Sign in</button>

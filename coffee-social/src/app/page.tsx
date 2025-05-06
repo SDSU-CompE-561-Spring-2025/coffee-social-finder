@@ -6,11 +6,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F8F5F2]">
-      {/* Navbar */}
-      <Navbar />
-
       {/* Hero Section */}
-      <section className="relative bg-[#5D6748] text-white py-16">
+      <section className="relative bg-[#5D6748] text-white py-8">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-8 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -27,7 +24,7 @@ export default function Home() {
                 Explore Map
               </Link>
               <Link
-                href="/cafes"
+                href="/restaurant"
                 className="border border-white px-6 py-2 rounded-md font-medium hover:bg-white hover:text-[#5D6748] transition"
               >
                 Browse Cafes
