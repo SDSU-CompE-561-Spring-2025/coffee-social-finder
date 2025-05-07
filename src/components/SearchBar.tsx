@@ -1,22 +1,29 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function SearchBar() {
   const [searchQuery, setSearchQuery] = useState("")
+  const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Replace this with actual search logic
-    console.log("Search Query:", searchQuery)
+    
+    if (searchQuery.trim()) {
+      // Store the search query in localStorage to use it on the results page
+      localStorage.setItem("lastSearchQuery", searchQuery.trim())
+      
+      // Navigate to the restaurant page with the search query as a parameter
+      router.push(`/restaurant?search=${encodeURIComponent(searchQuery.trim())}`)
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto">
       <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
-        Search
+        Search for cafes
       </label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

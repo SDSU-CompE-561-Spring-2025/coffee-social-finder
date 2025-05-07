@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 
 // Custom event for auth state changes
 const AUTH_STATE_CHANGE = 'auth_state_change'
@@ -17,8 +17,12 @@ export const notifyAuthChange = () => {
 
 export default function Navbar() {
   const router = useRouter()
+  const pathname = usePathname()
   const [currentUser, setCurrentUser] = useState<any>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  
+  // Check if we should hide navbar on login and signup pages
+  const hideNavbar = pathname === '/login' || pathname === '/signup';
   
   // Function to check auth state
   const checkAuth = () => {
@@ -61,7 +65,9 @@ export default function Navbar() {
   }
   
   return (
-    <nav className="bg-[#5D6748] p-3 flex items-center justify-between shadow-md">
+    <>
+      {!hideNavbar && (
+        <nav className="bg-[#5D6748] p-3 flex items-center justify-between shadow-md">
       <div className="flex justify-start items-center">
         <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
             <Image 
@@ -96,6 +102,9 @@ export default function Navbar() {
         <Link href="/tags" className="hover:underline">
           Tags
         </Link>
+        <Link href="/about" className="hover:underline">
+          About
+        </Link>
         
         {currentUser ? (
           <>
@@ -125,6 +134,8 @@ export default function Navbar() {
           </div>
         )}
       </div>
-    </nav>
+        </nav>
+      )}
+    </>
   )
 }
