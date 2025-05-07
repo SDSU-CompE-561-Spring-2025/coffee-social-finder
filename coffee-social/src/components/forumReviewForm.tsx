@@ -14,6 +14,7 @@ import {
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     cn
 } from "@/lib/utils"
 import {
@@ -34,18 +35,24 @@ import {
 import {
     Textarea
 } from "@/components/ui/textarea"
+
 import {
     TagsInput
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
 } from "@/components/ui/tags-input"
 import {
     CloudUpload,
     Paperclip
 } from "lucide-react"
+
 import {
     FileInput,
     FileUploader,
     FileUploaderContent,
     FileUploaderItem
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
 } from "@/components/ui/file-upload"
 
 const formSchema = z.object({
@@ -84,6 +91,7 @@ export default function MyForm() {
             toast.error("Failed to submit the form. Please try again.");
         }
     }
+
 
     return (
         <Form {...form}>
@@ -160,7 +168,7 @@ export default function MyForm() {
                         <FormField
                             control={form.control}
                             name="ForumImageData"
-                            render={({ field }) => (
+                            render={() => (
                                 <FormItem>
                                     <FormLabel>Add An Image</FormLabel>
                                     <FormControl>

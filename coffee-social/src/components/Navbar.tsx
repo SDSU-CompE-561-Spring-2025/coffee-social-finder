@@ -16,6 +16,9 @@ export default function Navbar() {
         <Link href="/restaurant" className="hover:underline">
           Cafes
         </Link>
+        <Link href="/forum" className="hover:underline">
+          Forum
+        </Link>
         <Link href="/tags" className="hover:underline">
           Tags
         </Link>
