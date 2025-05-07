@@ -17,7 +17,6 @@ export default function SignUpPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: hook up your sign-up API
     console.log('Signing up:', form)
   }
 
@@ -28,56 +27,76 @@ export default function SignUpPage() {
       </header>
 
       <main className={styles.signupMain}>
-        <h2>Sign up</h2>
         <div className={styles.formContainer}>
+          {/* move and restyle the title */}
+          <h2 className={styles.formTitle}>Sign Up</h2>
+
           <form onSubmit={handleSubmit} className={styles.signupForm}>
-            <label>
-              First Name
+            <div className={styles.inputGroup}>
               <input
+                id="firstName"
                 name="firstName"
+                placeholder=" "
                 value={form.firstName}
                 onChange={handleChange}
-                placeholder="Value"
                 required
+                className={styles.inputField}
               />
-            </label>
+              <label htmlFor="firstName" className={styles.floatingLabel}>
+                First Name
+              </label>
+            </div>
 
-            <label>
-              Last name
+            <div className={styles.inputGroup}>
               <input
+                id="lastName"
                 name="lastName"
+                placeholder=" "
                 value={form.lastName}
                 onChange={handleChange}
-                placeholder="Value"
                 required
+                className={styles.inputField}
               />
-            </label>
+              <label htmlFor="lastName" className={styles.floatingLabel}>
+                Last Name
+              </label>
+            </div>
 
-            <label>
-              Email
+            <div className={styles.inputGroup}>
               <input
+                id="email"
                 type="email"
                 name="email"
+                placeholder=" "
                 value={form.email}
                 onChange={handleChange}
-                placeholder="Value"
                 required
+                className={styles.inputField}
               />
-            </label>
+              <label htmlFor="email" className={styles.floatingLabel}>
+                Email
+              </label>
+            </div>
 
-            <label>
-              Password
+            <div className={styles.inputGroup}>
               <input
+                id="password"
                 type="password"
                 name="password"
+                placeholder=" "
                 value={form.password}
                 onChange={handleChange}
-                placeholder="Value"
                 required
+                className={styles.inputField}
               />
-            </label>
+              <label htmlFor="password" className={styles.floatingLabel}>
+                Password
+              </label>
+            </div>
 
-            <button type="submit">Register</button>
+            <button type="submit" className={styles.registerButton}>
+              Register
+            </button>
           </form>
 
           <p className={styles.loginCta}>

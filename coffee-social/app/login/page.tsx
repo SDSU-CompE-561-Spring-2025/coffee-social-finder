@@ -13,7 +13,6 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: hook up your login API
     console.log('Logging in:', form)
   }
 
@@ -25,42 +24,51 @@ export default function LoginPage() {
 
       <main className={styles.loginMain}>
         <div className={styles.formWrapper}>
-          <div className={styles.tab}>
-            <Link href="/signup">Create Account</Link>
-          </div>
+          {/* LOGIN TITLE */}
+          <h2 className={styles.formTitle}>Login</h2>
+
           <form onSubmit={handleSubmit} className={styles.loginForm}>
-            <label>
-              Email
+            <div className={styles.inputGroup}>
               <input
+                id="email"
                 type="email"
                 name="email"
-                placeholder="Value"
+                placeholder=" "
                 value={form.email}
                 onChange={handleChange}
                 required
+                className={styles.inputField}
               />
-            </label>
+              <label htmlFor="email" className={styles.floatingLabel}>
+                Email
+              </label>
+            </div>
 
-            <label>
-              Password
+            <div className={styles.inputGroup}>
               <input
+                id="password"
                 type="password"
                 name="password"
-                placeholder="Value"
+                placeholder=" "
                 value={form.password}
                 onChange={handleChange}
                 required
+                className={styles.inputField}
               />
-            </label>
+              <label htmlFor="password" className={styles.floatingLabel}>
+                Password
+              </label>
+            </div>
 
-            <Link
-             href="/login"
-             className={styles.signInLink}  
-            >
-               Sign In
-           </Link>
+            <button type="submit" className={styles.loginButton}>
+              Sign in
+            </button>
 
+            <p className={styles.signupPrompt}>
+              Don’t have an account? <Link href="/signup">Create account here</Link>
+            </p>
           </form>
+
         </div>
 
         <div className={styles.logoContainer}>
@@ -80,3 +88,4 @@ export default function LoginPage() {
     </div>
   )
 }
+

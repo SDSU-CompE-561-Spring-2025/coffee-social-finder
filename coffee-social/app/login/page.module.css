@@ -1,4 +1,66 @@
-.loginPage {
+
+.loginForm input {
+    background-color: #f0f0f0;  /* light grey */
+    color: lch(21.8% 0.46 19.03);                /* dark text */
+    border: 1px solid #ccc;     /* subtle border */
+  }
+  
+  
+  .loginform button {
+    background-color: #fff;     /* white */
+    color: #556B2F;             
+    border: 2px solid #556B2F;  /* match text */
+    border-radius: 4px;
+    padding: 0.75rem;
+    cursor: pointer;
+  }
+  
+  /* hover state */
+  .loginform button:hover {
+    background-color: #f4f4f4;  /* very light grey */
+  }
+  
+  .loginButton {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: #556B2F;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .loginButton:hover {
+    background-color: #445A26;
+  }
+  
+  .forgotPassword {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #d5c69f;
+    text-decoration: underline;
+  }
+  
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loginFooter {
+    background: #6b734c;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 2rem;
+  }
+  
+  .loginFooter a,
+  .loginFooter span {
+    color: #f6f0f0;
+    text-decoration: none;
+  } 
+  
+  .loginPage {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -36,74 +98,59 @@
     min-width: 300px;
   }
   
-  .tab {
-    position: absolute;
-    top: -1.2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #492e0d;
-    padding: 0.5rem 1rem;
-    border-radius: 4px 4px 0 0;
-  }
-  
-  .tab a {
+  /* New title above the form */
+  .formTitle {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
     color: #fff;
-    text-decoration: none;
-    font-size: 0.9rem;
+    text-align: center;
   }
   
   .loginForm {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
   }
   
   .loginForm label {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     color: #d5c69f;
     font-size: 0.9rem;
   }
   
- /* give inputs a light background so they stand out */
-.loginForm input {
-    background-color: #f0f0f0;  /* light grey */
-    color: lch(21.8% 0.46 19.03);                /* dark text */
-    border: 1px solid #ccc;     /* subtle border */
-  }
-  
-  
-  .loginform button {
-    background-color: #fff;     /* white */
-    color: #556B2F;             
-    border: 2px solid #556B2F;  /* match text */
+  .loginForm input {
+    margin-top: 0.25rem;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 0.75rem;
-    cursor: pointer;
-  }
-  
-  /* hover state */
-  .loginform button:hover {
-    background-color: #f4f4f4;  /* very light grey */
   }
   
   .signInLink {
-    display: block;           /* make it take its own line */
-    margin-top: 1rem;         /* space above */
-    color: #fff;              /* white text */
+    display: block;
+    margin-top: 1rem;
+    color: #fff;
     text-decoration: underline;
-    font-size: 1rem;          /* adjust size if you like */
-    text-align: center;       /* center within form */
+    text-align: center;
   }
   
   .signInLink:hover {
-    opacity: 0.8;             /* subtle hover effect */
+    opacity: 0.8;
   }
   
-  .forgotPassword {
+  /* “Don’t have an account?” prompt */
+  .signupPrompt {
     margin-top: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    text-align: center;
     color: #d5c69f;
+  }
+  
+  .signupPrompt a {
+    color: #fff;
     text-decoration: underline;
   }
   
@@ -125,4 +172,36 @@
     color: #f6f0f0;
     text-decoration: none;
   }
+
+  .inputGroup {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .inputField {
+    width: 100%;
+    padding: 1rem 0.5rem 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f0f0f0;
+    font-size: 1rem;
+  }
+  
+  .floatingLabel {
+    position: absolute;
+    left: 0.5rem;
+    top: 1rem;
+    font-size: 1rem;
+    color: #777;
+    pointer-events: none;
+    transition: all 0.2s ease-out;
+  }
+  
+  .inputField:focus + .floatingLabel,
+  .inputField:not(:placeholder-shown) + .floatingLabel {
+    top: 0.25rem;
+    font-size: 0.75rem;
+    color: #556B2F;
+  }
+  
   

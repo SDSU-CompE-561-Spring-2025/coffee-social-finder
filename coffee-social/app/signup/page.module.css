@@ -1,99 +1,140 @@
 .signupPage {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background: #d5c69f;
-    margin: 0;
-  }
-  
-  .signupHeader {
-    background: #6b734c;
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  .signupHeader h1 {
-    margin: 0;
-    font-family: 'Brush Script MT', cursive;
-    font-size: 3rem;
-    color: #fff;
-  }
-  
-  .signupMain {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 3rem;
-  }
-  
-  .signupMain h2 {
-    margin-bottom: 1rem;
-    color: #7d6e53;
-  }
-  
-  .formContainer {
-    background: #7d5831;
-    padding: 2rem;
-    border-radius: 6px;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
-  }
-  
-  .signupForm {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .signupForm label {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    color: #d5c69f;
-    font-size: 0.9rem;
-  }
-  
-  /* give inputs a light background so they stand out */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #d5c69f;
+  margin: 0;
+}
+
+.signupHeader {
+  background: #6b734c;
+  padding: 1rem;
+  text-align: center;
+}
+
+.signupHeader h1 {
+  margin: 0;
+  font-family: 'Brush Script MT', cursive;
+  font-size: 3rem;
+  color: #fff;
+}
+
+.signupMain {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.formContainer {
+  background: #7d5831;
+  padding: 2rem;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 320px;
+}
+
+/* new, same as login page */
+.formTitle {
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;      
+  color: #fff;          /* white */
+  text-align: center;
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.signupForm label {
+  display: flex;
+  flex-direction: column;
+  color: #d5c69f;
+  font-size: 0.9rem;
+}
+
 .signupForm input {
-    background-color: #f0f0f0;  /* light grey */
-    color: #333;                /* dark text */
-    border: 1px solid #ccc;     /* subtle border */
-  }
-  
- 
-  .signupForm button {
-    background-color: #fff;     /* white */
-    color: #556B2F;             
-    border: 2px solid #556B2F;  /* match text */
-    border-radius: 4px;
-    padding: 0.75rem;
-    cursor: pointer;
-  }
-  
-  /* hover state */
-  .signupForm button:hover {
-    background-color: #f4f4f4;  /* very light grey */
-  }
-  
-  .loginCta {
-    margin-top: 0.5rem;
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.registerButton {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #556B2F;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.registerButton:hover {
+  background-color: #445A26;
+}
+
+.loginCta {
+  margin-top: 0.5rem;
+    font-size: 0.85rem;
     text-align: center;
-  }
-  
-  .loginCta a {
-    color: #fff;
-    text-decoration: underline;
-  }
-  
-  .signupFooter {
-    background: #6b734c;
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 2rem;
-  }
-  
-  .signupFooter a,
-  .signupFooter span {
-    color: #fbfbfb;
-    text-decoration: none;
-  }
-  
+    color: #d5c69f;;
+}
+
+.loginCta a {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.signupFooter {
+  background: #6b734c;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+}
+
+.signupFooter a,
+.signupFooter span {
+  color: #f7f2f2;
+  text-decoration: none;
+}
+
+.inputGroup {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* the actual input */
+.inputField {
+  width: 100%;
+  padding: 1rem 0.5rem 0.25rem; /* room for label */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f0f0f0;
+  font-size: 1rem;
+}
+
+/* the floating label */
+.floatingLabel {
+  position: absolute;
+  left: 0.5rem;
+  top: 1rem;
+  font-size: 1rem;
+  color: #777;
+  pointer-events: none;
+  transition: all 0.2s ease-out;
+}
+
+/* move label up & shrink on focus or when input has content */
+.inputField:focus + .floatingLabel,
+.inputField:not(:placeholder-shown) + .floatingLabel {
+  top: 0.25rem;
+  font-size: 0.75rem;
+  color: #556B2F;
+}
