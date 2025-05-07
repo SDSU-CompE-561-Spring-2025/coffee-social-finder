@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import ImageCarousel from "@/components/ImageCarousel";
 import SearchBar from "@/components/SearchBar";
 import Link from "next/link";

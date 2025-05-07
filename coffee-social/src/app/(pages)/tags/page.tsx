@@ -1,4 +1,4 @@
-import { mockTags, mockRestaurants } from '../../data/mockData';
+import { mockTags, mockRestaurants } from '../../../data/mockData';
 import Link from 'next/link';
 
 export const metadata = {

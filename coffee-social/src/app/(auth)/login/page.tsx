@@ -62,7 +62,7 @@ export default function LoginPage() {
 
         <div className={styles.logoContainer}>
           <Image
-            src="/assets/coffeecompass.png"
+            src="/assets/coffeecompass.svg"
             alt="Caffeine Compass logo"
             width={300}
             height={300}
