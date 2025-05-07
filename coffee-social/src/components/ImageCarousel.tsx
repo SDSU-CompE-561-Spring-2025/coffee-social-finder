@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 
-const images = ["/assets/betterbuzz.webp", "/assets/holsemcoffee.webp", "/assets/s3coffeebar.webp"]
+const images = ["/assets/betterbuzz.svg", "/assets/holsemcoffee.svg", "/assets/s3coffeebar.svg"]
 
 export default function ImageCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)

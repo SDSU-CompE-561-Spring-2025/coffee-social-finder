@@ -6,7 +6,7 @@ export default function Navbar() {
     <nav className="bg-[#5D6748] p-1 flex items-center justify-between">
       <div className="flex justify-start">
         <Link href="/">
-            <Image src="/assets/coffeecompass.png" alt="Compass Logo" width={200} height={100} className="mr-2" />
+            <Image src="/assets/coffeecompass.svg" alt="Compass Logo" width={100} height={100} className="mr-2" />
         </Link>
       </div>
       <div className="flex items-center space-x-4 text-white">
