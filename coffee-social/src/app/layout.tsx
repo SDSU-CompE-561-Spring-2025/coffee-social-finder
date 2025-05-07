@@ -39,7 +39,7 @@ export default function RootLayout({
               <div className = "flex justify-between items-center">
     
                 <div>
-                  <Link href="/about" className="text-black hover:text-gray-700">About</Link>
+                  <Link href="/" className="text-black hover:text-gray-700">Home</Link>
                 </div>
                 
                 <div>

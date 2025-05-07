@@ -10,6 +10,9 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="flex items-center space-x-4 text-white">
+        <Link href="/" className="hover:underline">
+          Home
+        </Link>
         <Link href="/map" className="hover:underline">
           Map
         </Link>
