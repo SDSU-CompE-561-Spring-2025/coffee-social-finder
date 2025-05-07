@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+*/node_modules/
+coffee-social/node_modules/
+
+# Next.js build output
+.next/
+*/.next/
+coffee-social/.next/
+
+# Misc
+.DS_Store
+*.log
+coffee-social/node_modules/
+node_modules/
+.next/
+coffee-social/node_modules/
