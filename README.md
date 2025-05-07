@@ -1,6 +1,6 @@
 ## Getting Started
 
-First, run the development server:
+Run the following in VSCode terminal:
 
 ```bash
 npm install
