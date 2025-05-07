@@ -17,7 +17,7 @@ export default function Navbar() {
         <Link href="/map" className="<hover:underline">
           Map
         </Link>
-        <Link href="/restaurant" className="hover:underline">
+        <Link href="/restaurants" className="hover:underline">
           Cafes
         </Link>
         <Link href="/tags" className="hover:underline">

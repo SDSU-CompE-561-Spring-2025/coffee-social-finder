@@ -23,7 +23,7 @@ export default function Home() {
                 Explore Map
               </Link>
               <Link
-                href="/restaurant"
+                href="/restaurants"
                 className="border border-white px-6 py-2 rounded-md font-medium hover:bg-white hover:text-[#5D6748] transition"
               >
                 Browse Cafes
