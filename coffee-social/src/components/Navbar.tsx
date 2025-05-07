@@ -16,17 +16,17 @@ export default function Navbar() {
         <Link href="/restaurant" className="hover:underline">
           Cafes
         </Link>
-        <Link href="/bookmarks" className="hover:underline">
-          Bookmarks
+        <Link href="/tags" className="hover:underline">
+          Tags
         </Link>
         <Link href="/profile" className="hover:underline">
           Profile
         </Link>
-          <Link href="/sign-in">
-            <button type = "button" className="bg-white text-black px-3 py-1 rounded text-sm">Sign in</button>
+          <Link href="/login">
+            <button type = "button" className="bg-white text-black px-3 py-1 rounded text-sm">Login</button>
           </Link>
-          <Link href="/Register">
-          <button type ="button" className="bg-[#3a3a3a] text-white px-3 py-1 rounded text-sm">Register</button>
+          <Link href="/signup">
+          <button type ="button" className="bg-[#3a3a3a] text-white px-3 py-1 rounded text-sm">Sign Up</button>
           </Link>
           </div>
     </nav>
