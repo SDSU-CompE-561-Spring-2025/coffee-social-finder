@@ -49,7 +49,7 @@ export default function RestaurantsPage() {
               
               <div className="mt-6 pt-4 border-t border-gray-100">
                 <Link 
-                  href={`/restaurants/${restaurant.id}`}
+                  href={`/restaurant/${restaurant.id}`}
                   className="text-amber-700 hover:text-amber-900 font-medium"
                 >
                   View Details →
