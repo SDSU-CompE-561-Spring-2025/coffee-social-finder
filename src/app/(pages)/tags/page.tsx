@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { mockTags, mockRestaurants } from '../../data/mockData';
+import { mockTags, mockRestaurants } from '@/data/mockData';
 import Link from 'next/link';
 
 // Define the tag interface

@@ -87,8 +87,8 @@ export default function RestaurantsPage() {
     <div className="py-8 px-6 md:px-12 lg:px-16 bg-[#dddfcb]">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 text-[#5D6748] font-serif">Coffee Shops</h1>
-          <p className="text-gray-600 text-lg">Discover the best coffee shops in your area</p>
+          <h1 className="text-4xl font-bold mb-2 text-[#5D6748] font-serif text-center">Coffee Shops</h1>
+          <p className="text-gray-600 text-lg text-center">Discover the best coffee shops in your area</p>
         </div>
 
         {/* Search bar at the top of results page */}
@@ -135,7 +135,7 @@ export default function RestaurantsPage() {
             )}
             
             {!searchQuery && !tagFilter && (
-              <h2 className="text-xl font-medium">
+              <h2 className="text-xl font-medium text-gray-700">
                 All Coffee Shops <span className="text-gray-500">({filteredRestaurants.length})</span>
               </h2>
             )}
@@ -150,7 +150,7 @@ export default function RestaurantsPage() {
                 id="sort-select"
                 value={sortBy}
                 onChange={handleSortChange}
-                className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm"
+                className="text-gray-700 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm"
               >
                 <option value="default">Default</option>
                 <option value="name">Name</option>
@@ -159,7 +159,7 @@ export default function RestaurantsPage() {
               
               <button
                 onClick={toggleSortDirection}
-                className="p-2 rounded-md bg-white border border-gray-300 hover:bg-gray-50"
+                className="p-2 rounded-md bg-white border border-gray-300 hover:bg-gray-50 text-gray-700"
                 aria-label={sortDirection === 'asc' ? "Sort ascending" : "Sort descending"}
               >
                 {sortDirection === 'asc' ? '↑' : '↓'}
