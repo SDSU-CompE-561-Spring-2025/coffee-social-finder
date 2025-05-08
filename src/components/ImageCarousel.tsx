@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 
-const images = ["/assets/betterbuzz.svg", "/assets/holsemcoffee.svg", "/assets/s3coffeebar.svg"]
+const images = ["/assets/scrimshaw/scrim1.jpg", "/assets/holsem/hol3.jpg", "/assets/S3CoffeeBar/s32.webp"]
 
 export default function ImageCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -19,7 +19,7 @@ export default function ImageCarousel() {
   return (
     <div id="default-carousel" className="relative w-full">
       {/* Carousel Wrapper */}
-      <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+      <div className="relative h-80 overflow-hidden rounded-lg md:h-[600px]">
         {images.map((src, index) => (
           <div
             key={index}

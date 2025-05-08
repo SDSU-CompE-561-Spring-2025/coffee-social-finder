@@ -84,7 +84,7 @@ export default function RestaurantsPage() {
   };
 
   return (
-    <div className="py-8 px-6 md:px-12 lg:px-16 bg-[#f8f5f0]">
+    <div className="py-8 px-6 md:px-12 lg:px-16 bg-[#dddfcb]">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2 text-[#5D6748] font-serif">Coffee Shops</h1>
@@ -188,7 +188,7 @@ export default function RestaurantsPage() {
           >
             <div className="h-40 bg-gray-200 relative">
               <Image
-                src={`/assets/shop${(restaurant.id % 2) + 1}.svg`}
+                src={restaurant.image[0]}
                 alt={restaurant.name}
                 layout="fill"
                 objectFit="cover"
@@ -197,7 +197,7 @@ export default function RestaurantsPage() {
             </div>
             <div className="p-6">
               <div className="flex justify-between items-start mb-2">
-                <h2 className="text-xl font-bold">{restaurant.name}</h2>
+                <h2 className="text-xl font-bold text-black">{restaurant.name}</h2>
                 <div className="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-sm font-medium">
                   ★ {restaurant.rating}
                 </div>

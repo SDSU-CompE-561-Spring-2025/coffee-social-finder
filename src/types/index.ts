@@ -5,6 +5,7 @@ export interface Restaurant {
     rating: number;
     phoneNumber: string;
     tags: Tag[];
+    image: string[];
   }
   
   export interface Tag {

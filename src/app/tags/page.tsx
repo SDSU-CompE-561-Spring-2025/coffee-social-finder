@@ -73,7 +73,7 @@ export default function TagsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0]">
+    <div className="min-h-screen bg-[#dddfcb]">
       <div className="container mx-auto px-4 md:px-8 py-12">
         <div className="mb-10 text-center">
           <h1 className="text-3xl font-bold mb-3 text-amber-900">Browse by Tag</h1>

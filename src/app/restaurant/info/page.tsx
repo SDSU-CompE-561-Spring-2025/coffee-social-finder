@@ -34,13 +34,6 @@ export default function RestaurantDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const reviewFormRef = useRef<HTMLDivElement>(null)
 
-  // Carousel images based on restaurant ID
-  const carouselImages = [
-    '/assets/shop1.svg',
-    '/assets/shop2.svg',
-    `/assets/shop${Math.floor(Math.random() * 2) + 1}.svg`,
-  ]
-
   useEffect(() => {
     // Get current user from localStorage
     if (typeof window !== 'undefined') {
@@ -144,13 +137,13 @@ export default function RestaurantDetailPage() {
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => 
-      prevIndex === carouselImages.length - 1 ? 0 : prevIndex + 1
+      prevIndex === restaurant.image.length - 1 ? 0 : prevIndex + 1
     )
   }
 
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) => 
-      prevIndex === 0 ? carouselImages.length - 1 : prevIndex - 1
+      prevIndex === 0 ? restaurant.image.length - 1 : prevIndex - 1
     )
   }
 
@@ -196,7 +189,7 @@ export default function RestaurantDetailPage() {
             {/* Restaurant Image Carousel */}
             <div className="md:w-1/2 relative">
               <div className="h-72 md:h-full relative">
-                {carouselImages.map((src, index) => (
+                {restaurant.image.map((src:string, index: number) => (
                   <div
                     key={index}
                     className={`absolute inset-0 transition-opacity duration-500 ${
@@ -235,7 +228,7 @@ export default function RestaurantDetailPage() {
                 
                 {/* Carousel indicators */}
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                  {carouselImages.map((_, index) => (
+                  {restaurant.image.map((src: string, index: number) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
