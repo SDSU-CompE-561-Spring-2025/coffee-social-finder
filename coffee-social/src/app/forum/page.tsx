@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
+// import {
+//     Tooltip,
+//     TooltipContent,
+//     TooltipProvider,
+//     TooltipTrigger,
+// } from "@/components/ui/tooltip"
 
 type CommentData = {
     id: number;
