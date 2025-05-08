@@ -1,5 +1,5 @@
 # CaffeineCompassBackEnd -> Backend
-# coffee-social -> FrontEnd
+# src -> FrontEnd
 
 ## Getting Started
 
