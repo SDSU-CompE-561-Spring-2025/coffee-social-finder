@@ -9,12 +9,12 @@ export default function MapPage() {
   // Mock coordinates for the coffee shops
   // In a real app, these would come from your backend or an API
   const shopCoordinates = [
-    { id: 1, lat: 32.715, lng: -117.161 }, // San Diego downtown
-    { id: 2, lat: 32.732, lng: -117.151 }, // North Park area
-    { id: 3, lat: 32.799, lng: -117.235 }, // La Jolla area
-    { id: 4, lat: 32.763, lng: -117.124 }, // Normal Heights area
-    { id: 5, lat: 32.748, lng: -117.130 }, // University Heights area
-    { id: 6, lat: 32.753, lng: -117.138 }, // North Park area
+    { id: 1, lat: 32.748, lng: -117.130 }, // Holsem
+    { id: 2, lat: 32.763, lng: -117.121 }, // LeStats
+    { id: 3, lat: 32.788, lng: -117.097 }, // S3Coffee
+    { id: 4, lat: 32.759, lng: -117.070 }, // Living Room
+    { id: 5, lat: 32.758, lng: -117.078 }, // ATea7
+    { id: 6, lat: 32.758, lng: -117.075 }, // North Park area
   ]
 
   // Combine restaurant data with coordinates
@@ -56,7 +56,7 @@ export default function MapPage() {
           {coffeeShops.map((shop) => (
             <div 
               key={shop.id} 
-              className={`bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer ${selectedShop.id === shop.id ? 'ring-2 ring-amber-500' : ''}`}
+              className={`bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer text-black ${selectedShop.id === shop.id ? 'ring-2 ring-amber-500' : ''}`}
               onClick={() => setSelectedShop(shop)}
             >
               <div className="p-4">
