@@ -2,10 +2,30 @@ import Navbar from "@/components/Navbar";
 import ImageCarousel from "@/components/ImageCarousel";
 import SearchBar from "@/components/SearchBar";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F8F5F2]">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-15 z-0"
+        style={{
+          backgroundImage: "url('/assets/IconNoColor.svg')",
+          backgroundSize: "100%",
+          filter: "blur(5px)",
+        }}
+      ></div>
+      {/* Featured Cafes */}
+      <section className="py-12 px-4 bg-[#D8CAA7]">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-center text-black">
+            Featured Coffee Shops
+          </h2>
+          <ImageCarousel />
+        </div>
+      </section>
+
       {/* Hero Section */}
       <section className="relative bg-[#5D6748] text-white py-8">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
@@ -32,17 +52,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Featured Cafes */}
-      <section className="py-12 px-4 bg-[#D8CAA7]">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-center text-black">
-            Featured Coffee Shops
-          </h2>
-          <ImageCarousel />
-        </div>
-        <div className="md:center relative py-6" >
+        <div className="md:center relative py-6">
           <SearchBar />
         </div>
       </section>

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams, useRouter } from "next/navigation"
-import { mockRestaurants, mockTags } from '@/data/mockData'
+import { mockRestaurants, mockTags } from "@/data/mockData"
 
 // Review type definition
 interface Review {

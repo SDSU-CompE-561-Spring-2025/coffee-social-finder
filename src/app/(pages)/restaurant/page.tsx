@@ -190,8 +190,8 @@ export default function RestaurantsPage() {
               <Image
                 src={restaurant.image[0]}
                 alt={restaurant.name}
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{ objectFit: "cover" }}
                 className="w-full h-full object-cover"
               />
             </div>

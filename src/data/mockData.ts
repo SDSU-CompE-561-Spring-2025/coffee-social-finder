@@ -51,7 +51,7 @@ export const mockRestaurants: Restaurant[] = [
     image: [
       "/assets/S3CoffeeBar/s31.jpg",
       "/assets/S3CoffeeBar/s32.webp",
-      "/assets/S3CoffeeBar/s33.jpg",
+      "/assets/S3CoffeeBar/s33.png",
     ],
   },
   {

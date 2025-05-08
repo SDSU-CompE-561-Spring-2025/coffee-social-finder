@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { mockRestaurants } from '@/data/mockData'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from 'next/image';
 
 export default function MapPage() {
   // Mock coordinates for the coffee shops
