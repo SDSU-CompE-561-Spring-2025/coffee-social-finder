@@ -1,3 +1,6 @@
+# CaffeineCompassBackEnd -> Backend
+# coffee-social -> FrontEnd
+
 ## Getting Started
 
 Run the following in VSCode terminal:
