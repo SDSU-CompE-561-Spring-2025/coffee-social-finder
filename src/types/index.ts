@@ -7,7 +7,7 @@ export interface Restaurant {
     tags: Tag[];
     image: string[];
   }
-  
+   
   export interface Tag {
     id: number;
     name: string;
