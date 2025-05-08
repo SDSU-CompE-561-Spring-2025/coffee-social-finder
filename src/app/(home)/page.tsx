@@ -7,15 +7,6 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F8F5F2]">
-      {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-15 z-0"
-        style={{
-          backgroundImage: "url('/assets/IconNoColor.svg')",
-          backgroundSize: "100%",
-          filter: "blur(5px)",
-        }}
-      ></div>
       {/* Featured Cafes */}
       <section className="py-12 px-4 bg-[#D8CAA7]">
         <div className="container mx-auto">
