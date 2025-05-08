@@ -1,0 +1,685 @@
+openapi: 3.0.3
+info:
+  title: Swagger Cafe Finder - OpenAPI 3.0
+  description: |-
+    This is a Cafe Finder Server based on the OpenAPI 3.0 specification.
+  version: 1.0.11
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+tags:
+- name: "User"
+- name: "Comments"
+- name: "Bookmark"
+- name: "Filtered Tags"
+- name: "Cosmetic"
+- name: "Restaurant"
+paths:
+
+  /api/users:
+    get:
+      tags: 
+      - User
+      summary: "Retrieve a list of users"
+      responses: 
+        200: 
+          description: "List of users"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: 
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+                      format: email
+                    password:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    bookmark_id:
+                      type: integer
+                    filtered_tags_id:
+                      type: integer
+                    cosmetics_id:
+                      type: integer
+    post:
+      tags: 
+      - User
+      summary: "Create a new user"
+      parameters:
+        - name: name
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            required:
+            - name
+        - name: email
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            format: email
+            required:
+            - email
+        - name: password
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            required:
+            - password
+      responses:
+        201:
+          description: "Successfuly created user"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    id: 
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+                      format: email
+  /api/users/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: id of user to return
+        required: true
+        schema:
+          type: integer
+    put:
+      tags:
+      - User
+      summary: "Edit user information"
+      parameters:
+        - name: name
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            required:
+            - name
+        - name: email
+          in: query  
+          description: Input name
+          required: true
+          schema:
+            type: string
+            format: email
+            required:
+            - email
+      responses:
+        200:
+          description: "Successfuly updated user"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - User
+      summary: "Delete a user"
+      responses:
+        200:
+          description: "Successfuly deleted user"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      
+  /api/commentThreads:
+    get:
+      tags:
+      - Comments
+      summary: "Retrieve a list of comment threads"
+      responses: 
+        200:
+          description: "List of Comments"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    comment_id:
+                      type: integer
+                    created_at:
+                      type: string
+                      format: date-time
+                    restaurant_id:
+                      type: integer
+                    tags_id:
+                      type: integer
+    post:
+      tags: 
+      - Comments
+      summary: "Create a new comment"
+      parameters:
+        - name: Title
+          in: query
+          description: "Title of Comment"
+          required: true
+          schema:
+            type: string
+        - name: Content
+          in: query
+          description: "Input comment description"
+          required: true
+          schema: 
+            type: string
+      responses:
+        200:
+          description: "Comment created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  name:
+                    type: string
+                  content:
+                    type: string
+  /api/commentThreads/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: id of comment to return
+        required: true
+        schema:
+          type: integer
+    put:
+      tags:
+      - Comments
+      summary: "Update comment information"
+      parameters:
+        - name: Comment
+          in: query
+          description: Update Comment text
+          required: true
+          schema:
+            type: string          
+      responses:
+            200:
+              description: "Comment Updated"
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+    delete:
+        tags:
+        - Comments
+        summary: "Delete a comment"
+        parameters:
+          - name: Comment
+            in: query
+            description: Input comment 
+            required: true
+            schema: 
+              type: string
+        responses:
+          200:
+            description: "Comment Deleted"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean        
+                        
+                        
+  /api/TagsPage:
+    get:
+      tags: 
+      - Filtered Tags
+      summary: "Retrieve a list of tags"
+      responses: 
+        200: 
+          description: "List of users"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag: 
+                      type: string
+                    id:
+                      type: integer
+  /api/TagsPage/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: id of tag to return
+        required: true
+        schema:
+          type: integer
+    put:
+      tags:
+      - Filtered Tags
+      summary: "Update tag preference"
+      parameters:
+        - name: tag
+          in: query  
+          description: Input tag
+          required: true
+          schema:
+            type: string
+            required:
+            - tag
+      responses:
+        200:
+          description: "Successfuly updated user tag preference"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - Filtered Tags
+      summary: "Delete a tag preference"
+      parameters:
+        - name: tag
+          in: query  
+          description: Input tag
+          required: true
+          schema:
+            type: string
+            required:
+            - tag
+      responses:
+        200:
+          description: "Successfuly deleted user tag preference"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+  /api/cosmetics:
+    get:
+      tags: 
+      - Cosmetic
+      summary: "Retrieve a list of cosmetics"
+      responses: 
+        200: 
+          description: "List of cosmetics"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cosmetic_id: 
+                      type: integer
+                    name:
+                      type: string
+                    date_aquired:
+                      type: string
+                      format: date-time
+  /api/cosmetics/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: id of cosmetic to return
+        required: true
+        schema:
+          type: integer
+    put:
+      tags:
+      - Cosmetic
+      summary: "Update profile cosmetics"
+      parameters:
+        - name: cosmetic
+          in: query  
+          description: Input cosmetic id
+          required: true
+          schema:
+            type: integer
+            required:
+            - cosmetic
+      responses:
+        200:
+          description: "Successfuly updated user cosmetic"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - Cosmetic
+      summary: "Delete a user cosmetic"
+      parameters:
+        - name: cosmetic
+          in: query  
+          description: Input cosmetic id
+          required: true
+          schema:
+            type: integer
+            required:
+            - cosmetic
+      responses:
+        200:
+          description: "Successfuly deleted user tag preference"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+  /api/bookmarks:
+    get:
+      tags: 
+      - Bookmark
+      summary: "Retrieve a list of bookmarks"
+      responses: 
+        200: 
+          description: "List of bookmarks"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    bookmark_id: 
+                      type: integer
+                    name:
+                      type: string
+                    date_bookmarked:
+                      type: string
+                    restaurant_name:
+                      type: string
+                    
+  /api/bookmarks/{id}:
+    parameters:
+        - name: id
+          in: path
+          description: id of bookmark
+          required: true
+          schema:
+            type: integer
+            required:
+            - bookmark_id
+    put:
+      tags:
+      - Bookmark
+      summary: "Update bookmark page"
+      responses:
+        200:
+          description: "Successfuly updated bookmark"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+    delete:
+      tags:
+      - Bookmark
+      summary: "Delete a bookmark"
+      parameters:
+        - name: id
+          in: query  
+          description: Input bookmark ID
+          required: true
+          schema:
+            type: integer
+            required:
+            - bookmark_id
+      responses:
+        200:
+          description: "Successfuly deleted bookmark"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+
+  /api/restaurantpage:
+    get:
+      tags: 
+        - Restaurant
+      description: "Retrieve a list of restaurants"
+      parameters:
+        - name: restaurant_name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: address
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "List of restaurants"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                    restaurant_name:
+                      type: string
+                    owner_email:
+                      type: string
+    post:
+      tags: 
+        - Restaurant
+      description: "Create a new restaurant page"
+      responses:
+        201:
+          description: "Successfully created restaurant page"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  restaurant:
+                    type: object
+  
+  /api/restaurantpage/{id}:
+    parameters:
+        - name: id
+          in: path
+          description: id of restaurant
+          required: true
+          schema:
+            type: integer
+            required:
+            - restaurant_id
+    put:
+      tags: 
+        - Restaurant
+      description: "Update restaurant information"
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: address
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Successfully updated restaurant information"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+    delete:
+      tags: 
+        - Restaurant
+      description: "Delete a restaurant"
+      responses:
+        200:
+          description: "Successfully deleted restaurant"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      required: [id, name, email, password, created_at]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        bookmarks:
+          type: string
+
+    Restaurant:
+      type: object
+      required: [address, name]
+      properties:
+        id:
+          type: integer
+        address:
+          type: string
+        name:
+          type: string
+        review_rating:
+          type: integer
+        phoneNumber:
+          type: string
+        filtered_tags_id:
+          type: integer
+        comment_id:
+          type: integer
+
+    Address:
+      type: object
+      required: [id, street, city, state, zip]
+      properties:
+        id:
+          type: integer
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+
+    Tags:
+      type: object
+      properties:
+        id:
+          type: integer
+        tags:
+          type: string
+
+    Comments_Reviews:
+      type: object
+      required: [title, comment_id, created_at]
+      properties:
+        title:
+          type: string
+        comment_id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+
+    Cosmetic:
+      type: object
+      properties:
+        cosmetic_ID:
+          type: string
+        name:
+          type: string
+        date_acquired:
+          type: string
+          format: date-time
