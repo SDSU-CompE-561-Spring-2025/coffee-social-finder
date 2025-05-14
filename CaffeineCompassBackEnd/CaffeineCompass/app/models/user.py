@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 from datetime import datetime
@@ -12,6 +12,8 @@ class User(Base):
     email = Column(String(150), unique=True, nullable=False, index=True)
     password = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+    address_id = Column(Integer, ForeignKey("address.id"))
+    username = Column(String, unique=True, nullable=False)
 
     #   comment this out for the test to work   
     cosmetics = relationship("Cosmetic", back_populates = "user")
