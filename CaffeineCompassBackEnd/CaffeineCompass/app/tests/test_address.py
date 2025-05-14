@@ -1,7 +1,6 @@
 import pytest
 from app.models.address import Address
 
-# test will fail if relationship is not commented out
 def test_address():
     address = Address(
         id = 1,

@@ -10,9 +10,9 @@ def test_comment():
         content="Test comment",
         title="Test comment",
         created_at=now,
-        restaurant_id=1,  # provide required FK
-        user_id=1,        # provide required FK
-        tag_id=1          # provide required FK
+        restaurant_id=1,  
+        user_id=1,        
+        tag_id=1          
     )
 
     assert comment.id == 1
