@@ -18,7 +18,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(
         db=db,
-        name=user.username,  # or `user.name` if your model uses that
+        username=user.username,
         email=user.email,
         password=user.password
     )

@@ -19,13 +19,13 @@ def get_user(db: Session, user_id: int):
 def get_user_by_email(db: Session, email: str):
     return db.query(User).filter(User.email == email).first()
 
-def create_user(db: Session, name: str, email: str, password: str):
+def create_user(db: Session, username: str, email: str, password: str):
     existing_user = db.query(User).filter(User.email == email).first()
     if existing_user:
         raise ValueError("A user with this email already exists.")
 
     db_user = User(
-        username=name,
+        username=username,
         email=email,
         hashed_password=get_password_hash(password)
     )
@@ -35,24 +35,31 @@ def create_user(db: Session, name: str, email: str, password: str):
         db.commit()
         db.refresh(db_user)
         return db_user
-    except IntegrityError as e:
+    except IntegrityError:
         db.rollback()
-        raise ValueError("Could not create user: Email must be unique.") from e
+        raise ValueError("Could not create user: Email must be unique.")
 
 
 
-def update_user(db: Session, user_id: int, name: Optional[str] = None, 
-                email: Optional[str] = None):
+
+def update_user(db: Session, user_id: int, user_update):
     db_user = db.query(User).filter(User.id == user_id).first()
     if not db_user:
-        return None
-    if name is not None:
-        db_user.name = name
-    if email is not None:
-        db_user.email = email
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if user_update.username is not None:
+        db_user.username = user_update.username
+    if user_update.email is not None:
+        db_user.email = user_update.email
+    if user_update.password is not None:
+        db_user.hashed_password = get_password_hash(user_update.password)
+    if user_update.is_active is not None:
+        db_user.is_active = user_update.is_active
+
     db.commit()
     db.refresh(db_user)
     return db_user
+
 
 def delete_user(db: Session, user_id: int):
     db_user = db.query(User).filter(User.id == user_id).first()
