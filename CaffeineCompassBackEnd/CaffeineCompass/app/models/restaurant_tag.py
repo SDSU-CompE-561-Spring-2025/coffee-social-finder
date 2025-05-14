@@ -21,7 +21,6 @@ class Restaurant(Base):
     #   comment this out for the test to work
     tags = relationship("Tag",secondary= restaurant_tag_association, back_populates = "restaurants")
     comments = relationship("Comment", back_populates = "restaurant")
-    bookmarks = relationship("Bookmark", back_populates="restaurant")
 
 class Tag(Base):
     __tablename__ = "tag"
