@@ -15,13 +15,7 @@ def read_comment(comment_id: int, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=Comment)
 def create_new_comment(comment: CommentCreate, db: Session = Depends(get_db)):
-    return create_comment(
-        db,
-        title=comment.title,
-        restaurant_id=comment.restaurant_id,
-        tags_id=comment.tags_id,
-        created_at=comment.created_at,
-    )
+    return create_comment(db=db, comment=comment)
 
 @router.put("/{comment_id}", response_model=Comment)
 def update_existing_comment(comment_id: int, comment: CommentUpdate, db: Session = Depends(get_db)):
@@ -32,9 +26,11 @@ def update_existing_comment(comment_id: int, comment: CommentUpdate, db: Session
         db,
         comment_id=comment_id,
         title=comment.title,
+        content=comment.content,
         restaurant_id=comment.restaurant_id,
-        tags_id=comment.tags_id,
+        tag_id=comment.tag_id,
     )
+
 
 @router.delete("/{comment_id}", response_model=dict)
 def delete_existing_comment(comment_id: int, db: Session = Depends(get_db)):
