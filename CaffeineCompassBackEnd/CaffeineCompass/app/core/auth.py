@@ -38,6 +38,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user(db: db_dependency, create_user_request: CreateUser):
     user = User(
+        name=create_user_request.name,
         username=create_user_request.username,
         email=create_user_request.email,
         password=bcrypt_context.hash(create_user_request.password),

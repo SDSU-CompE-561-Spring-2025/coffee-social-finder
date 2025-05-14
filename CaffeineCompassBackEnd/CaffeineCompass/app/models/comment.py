@@ -17,6 +17,6 @@ class Comment(Base):
     tag_id = Column(Integer, ForeignKey("tag.id"))
 
     #   comment this out for the test to work   
-    user = relationship("User", back_populates= "comments")
+    user = relationship("User", back_populates= "comments", foreign_keys=[user_id])
     restaurant   = relationship("Restaurant", back_populates= "comments")
     tags = relationship("Tag", back_populates= "comments")
