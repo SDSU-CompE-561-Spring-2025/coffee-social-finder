@@ -1,64 +1,75 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
-import { mockRestaurants, mockTags } from '@/data/mockData';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
+import { fetchRestaurants } from '@/app/_lib/api'; // Import API function
 
 export default function RestaurantsPage() {
   const searchParams = useSearchParams();
-  const [filteredRestaurants, setFilteredRestaurants] = useState(mockRestaurants);
+  const [restaurants, setRestaurants] = useState<any[]>([]); // State for all restaurants
+  const [filteredRestaurants, setFilteredRestaurants] = useState<any[]>([]); // State for filtered restaurants
   const [searchQuery, setSearchQuery] = useState('');
   const [tagFilter, setTagFilter] = useState<number | null>(null);
   const [tagName, setTagName] = useState('');
   const [sortBy, setSortBy] = useState('default'); // 'default', 'name', 'rating'
   const [sortDirection, setSortDirection] = useState('desc'); // 'asc', 'desc'
 
+  // Fetch restaurants from the backend
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchRestaurants(); // Fetch all restaurants
+        setRestaurants(data);
+        setFilteredRestaurants(data); // Initially, all restaurants are displayed
+      } catch (error) {
+        console.error('Failed to fetch restaurants:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   // Apply filters and sorting
   useEffect(() => {
-    // only use search from url params - only fallback to localStorage when explicitly searching
     const urlSearch = searchParams?.get('search') || '';
-    const storedSearch = typeof window !== 'undefined' ? localStorage.getItem('lastSearchQuery') || '' : '';
-    
-    // Check for tag filter in URL
     const tagParam = searchParams?.get('tag');
     const tagId = tagParam ? parseInt(tagParam) : null;
-    
-    // only use localStorage as fallback when coming from search
-    const query = urlSearch || (urlSearch === '' && !tagParam ? storedSearch : '');
+
+    const query = urlSearch || '';
     setSearchQuery(query);
     setTagFilter(tagId);
-    
+
     // Get tag name if filtering by tag
     if (tagId) {
-      const tag = mockTags.find(t => t.id === tagId);
+      const tag = restaurants.flatMap((r) => r.tags).find((t) => t.id === tagId);
       setTagName(tag ? tag.name : '');
     } else {
       setTagName('');
     }
-    
+
     // Apply filters
-    let filtered = [...mockRestaurants];
-    
+    let filtered = [...restaurants];
+
     // Filter by search query if present
     if (query) {
       const searchLower = query.toLowerCase();
-      filtered = filtered.filter(restaurant => (
-        restaurant.name.toLowerCase().includes(searchLower) || 
-        restaurant.address.toLowerCase().includes(searchLower) ||
-        restaurant.tags.some(tag => tag.name.toLowerCase().includes(searchLower))
-      ));
+      filtered = filtered.filter(
+        (restaurant) =>
+          restaurant.name.toLowerCase().includes(searchLower) ||
+          restaurant.address.toLowerCase().includes(searchLower) ||
+          restaurant.tags.some((tag: any) => tag.name.toLowerCase().includes(searchLower))
+      );
     }
     
     // Filter by tag if present
     if (tagId) {
-      filtered = filtered.filter(restaurant => 
-        restaurant.tags.some(tag => tag.id === tagId)
+      filtered = filtered.filter((restaurant) =>
+        restaurant.tags.some((tag: any) => tag.id === tagId)
       );
     }
-    
     // Apply sorting
     if (sortBy === 'name') {
       filtered.sort((a, b) => {
@@ -73,7 +84,7 @@ export default function RestaurantsPage() {
     }
     
     setFilteredRestaurants(filtered);
-  }, [searchParams, sortBy, sortDirection]);
+  }, [searchParams, sortBy, sortDirection, restaurants]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(event.target.value);
@@ -212,7 +223,7 @@ export default function RestaurantsPage() {
               </div>
               
               <div className="flex flex-wrap gap-2">
-                {restaurant.tags.map((tag) => (
+                {restaurant.tags.map((tag: any) => (
                   <span 
                     key={tag.id} 
                     className="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm"

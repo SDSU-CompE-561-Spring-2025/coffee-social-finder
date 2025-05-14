@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { mockTags, mockRestaurants } from '@/data/mockData';
+//import { mockTags, mockRestaurants } from '@/data/mockData';
 import Link from 'next/link';
 
 // Define the tag interface
@@ -50,27 +50,32 @@ const additionalTags = [
   }
 ];
 
-// Combine original and additional tags
-const allTags = [...mockTags, ...additionalTags];
+  export default function TagsPage() {
+    const [tagCounts, setTagCounts] = useState<TagWithCount[]>([]);
+    const [loading, setLoading] = useState(true);
 
-export default function TagsPage() {
-  const [tagCounts, setTagCounts] = useState<TagWithCount[]>([]);
-  
-  useEffect(() => {
-    // Calculate how many restaurants have each tag
-    const counts = allTags.map(tag => {
-      const count = mockRestaurants.filter(restaurant => 
-        restaurant.tags.some(t => t.id === tag.id)
-      ).length;
-      
-      return {
-        ...tag,
-        count: count // Only use actual count, no random values
-      } as TagWithCount;
-    });
-    
-    setTagCounts(counts);
-  }, []);
+    useEffect(() => {
+      const fetchTags = async () => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tags`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch tags');
+          }
+          const data: TagWithCount[] = await response.json();
+          setTagCounts(data);
+        } catch (error) {
+          console.error('Error fetching tags:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchTags();
+    }, []);
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
 
   return (
     <div className="min-h-screen bg-[#dddfcb]">

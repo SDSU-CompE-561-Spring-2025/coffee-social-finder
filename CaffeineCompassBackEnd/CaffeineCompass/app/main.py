@@ -44,9 +44,7 @@ origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
     "http://localhost",
-    "http://localhost:8080",
-    "https://CaffeineCompass.com",
-    "https://www.CaffeineCompass.com",
+    "http://localhost:3000"
 ]
 
 app.add_middleware(
@@ -67,9 +65,9 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 # Include routers
-app.include_router(user.router, prefix="/users")
-app.include_router(auth_router, prefix="/auth")
-app.include_router(restaurant.router, prefix="/restaurants")
-app.include_router(comment.router, prefix="/comments")
-app.include_router(tag.router, prefix="/tags")
-app.include_router(address.router, prefix="/addresses")
+app.include_router(user.router)
+app.include_router(auth_router)
+app.include_router(restaurant.router)
+app.include_router(comment.router)
+app.include_router(tag.router)
+app.include_router(address.router)

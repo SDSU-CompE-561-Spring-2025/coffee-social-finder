@@ -49,7 +49,7 @@ export default function SignUpPage() {
       }
 
       // MOCK MODE: Enable this when backend is not available
-      const useMockMode = true; // Set to false when backend is working
+      const useMockMode = false; // Set to false when backend is working
       
       if (useMockMode) {
         // Simulate a brief delay like a real API call
@@ -93,7 +93,7 @@ export default function SignUpPage() {
         }, 1500);
       } else {
         // Real backend API call - uncomment this when backend is working
-        const response = await fetch('http://localhost:8000/users/', {
+        const response = await fetch('http://127.0.0.1:8000/users/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

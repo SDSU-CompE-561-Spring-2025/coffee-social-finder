@@ -6,12 +6,14 @@ def get_restaurant(db: Session, restaurant_id: int):
     return db.query(Restaurant).filter(Restaurant.id == restaurant_id).first()
 
 def create_restaurant(db: Session, address: str, name: str, 
-                      rating: Optional[float] = None, phonenumber: Optional[str] = None):
+                      rating: Optional[float] = None, phonenumber: Optional[str] = None, lat: float = None, lng: float = None):
     db_restaurant = Restaurant(
         address=address,
         name=name,
         rating=rating,
-        phonenumber=phonenumber
+        phonenumber=phonenumber,
+        lat=lat,
+        lng=lng
     )
     db.add(db_restaurant)
     db.commit()
@@ -20,7 +22,7 @@ def create_restaurant(db: Session, address: str, name: str,
 
 def update_restaurant(db: Session, restaurant_id: int, address: Optional[str] = None, 
                       name: Optional[str] = None, rating: Optional[float] = None, 
-                      phonenumber: Optional[str] = None):
+                      phonenumber: Optional[str] = None, lat: str = None, lng: str = None):
     db_restaurant = db.query(Restaurant).filter(Restaurant.id == restaurant_id).first()
     if not db_restaurant:
         return None
@@ -32,6 +34,10 @@ def update_restaurant(db: Session, restaurant_id: int, address: Optional[str] = 
         db_restaurant.rating = rating
     if phonenumber is not None:
         db_restaurant.phonenumber = phonenumber
+    if lat is not None:
+        db_restaurant.lat = lat
+    if lng is not None:
+        db_restaurant.lng = lng
     db.commit()
     db.refresh(db_restaurant)
     return db_restaurant

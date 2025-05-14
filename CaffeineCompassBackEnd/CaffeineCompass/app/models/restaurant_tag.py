@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Table
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, Float
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 
@@ -17,6 +17,8 @@ class Restaurant(Base):
     name = Column(String(100), nullable=False)
     rating = Column(Integer)
     phonenumber = Column(String(15))
+    lat = Column(Float, nullable=False)  # Add latitude
+    lng = Column(Float, nullable=False)  # Add longitude
 
     tags = relationship("Tag",secondary= restaurant_tag_association, back_populates = "restaurants")
     comments = relationship("Comment", back_populates = "restaurant")

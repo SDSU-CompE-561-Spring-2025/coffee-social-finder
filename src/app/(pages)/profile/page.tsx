@@ -4,7 +4,14 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
-import { mockRestaurants } from "@/data/mockData"
+//import { mockRestaurants } from "@/data/mockData"\
+import {
+  fetchRestaurants,
+  fetchReviewsByRestaurantId,
+  fetchRestaurantById,
+  submitReview,
+  fetchAvailableImages
+} from '@/app/_lib/api'; 
 
 interface Review {
   id: number
@@ -31,89 +38,94 @@ interface User {
 }
 
 export default function Profile() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [userReviews, setUserReviews] = useState<Review[]>([])
-  const [isEditing, setIsEditing] = useState(false)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [userReviews, setUserReviews] = useState<Review[]>([]);
+  const [favoriteShops, setFavoriteShops] = useState<any[]>([]);
   const [profileData, setProfileData] = useState({
     name: '',
     bio: '',
     location: '',
     favoriteShop: '',
-    profileImage: ''
-  })
-  const [cupCount, setCupCount] = useState(0)
-  const [reviewSortOption, setReviewSortOption] = useState('date-desc')
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const [favoriteShops, setFavoriteShops] = useState(mockRestaurants)
-  const [successMessage, setSuccessMessage] = useState('')
-
-  // List of available profile images
-  const availableImages = [
-    '/assets/coffeecompass.svg',
-    '/assets/betterbuzz.svg',
-    '/assets/holsemcoffee.svg',
-    '/assets/s3coffeebar.svg'
-  ]
+    profileImage: '',
+  });
+  const [cupCount, setCupCount] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [recommendations, setRecommendations] = useState<any[]>([]);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [reviewSortOption, setReviewSortOption] = useState<string>('date-desc');
+  const [availableImages, setAvailableImages] = useState<string[]>([]);
 
   useEffect(() => {
-    // Check if a specific user is requested in the URL
-    const requestedUserId = searchParams?.get('user')
-    
-    if (typeof window !== 'undefined') {
-      // Get current logged in user
-      const userJson = localStorage.getItem('currentUser')
-      const loggedInUser = userJson ? JSON.parse(userJson) : null
-      
-      if (requestedUserId && loggedInUser?.id !== parseInt(requestedUserId)) {
-        // Viewing someone else's profile
-        const allUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
-        const requestedUser = allUsers.find((u: User) => u.id === parseInt(requestedUserId))
-        
-        if (requestedUser) {
-          setCurrentUser(requestedUser)
-          setCupCount(requestedUser.cupCount || 0)
-          setProfileData({
-            name: requestedUser.name || '',
-            bio: requestedUser.bio || 'No bio yet',
-            location: requestedUser.location || 'No location set',
-            favoriteShop: requestedUser.favoriteShop || '',
-            profileImage: requestedUser.profileImage || availableImages[0]
-          })
-        } else {
-          // User not found, redirect to restaurants
-          router.push('/restaurant')
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
         }
-      } else if (loggedInUser) {
-        // Viewing own profile
-        setCurrentUser(loggedInUser)
-        setCupCount(loggedInUser.cupCount || 0)
+        const userData = await response.json();
+        setCurrentUser(userData);
         setProfileData({
-          name: loggedInUser.name || '',
-          bio: loggedInUser.bio || 'Tell others about yourself...',
-          location: loggedInUser.location || 'Add your location',
-          favoriteShop: loggedInUser.favoriteShop || '',
-          profileImage: loggedInUser.profileImage || availableImages[0]
-        })
-      } else {
-        // Not logged in, redirect to login
-        router.push('/login?redirect=profile')
-        return
+          name: userData.name || '',
+          bio: userData.bio || 'Tell others about yourself...',
+          location: userData.location || 'Add your location',
+          favoriteShop: userData.favoriteShop || '',
+          profileImage: userData.profileImage || availableImages[0],
+        });
+        setCupCount(userData.cupCount || 0);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        router.push('/login?redirect=profile');
       }
-      
-      // Load user reviews
-      const allReviews = JSON.parse(localStorage.getItem('restaurantReviews') || '[]')
-      const userId = requestedUserId ? parseInt(requestedUserId) : loggedInUser?.id
-      
-      if (userId) {
-        const userFilteredReviews = allReviews.filter(
-          (review: Review) => review.userId === userId
-        )
-        setUserReviews(userFilteredReviews)
+    };
+
+    const fetchFavoriteShops = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/restaurants/`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch favorite shops');
+        }
+        const data = await response.json();
+        setFavoriteShops(data);
+      } catch (error) {
+        console.error('Error fetching favorite shops:', error);
       }
+    };
+
+    const fetchUserReviews = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews?userId=${currentUser?.id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch user reviews');
+        }
+        const reviews = await response.json();
+        setUserReviews(reviews);
+      } catch (error) {
+        console.error('Error fetching user reviews:', error);
+      }
+    };
+
+    const fetchRecommendations = async () => {
+      try {
+        const data = await fetchRestaurants(); // Replace with a specific recommendations endpoint if available
+        setRecommendations(data.slice(0, 3)); // Limit to 3 recommendations
+      } catch (error) {
+        console.error('Error fetching recommendations:', error);
+      }
+    };
+
+    fetchUserData();
+    fetchFavoriteShops();
+    if (currentUser) {
+      fetchUserReviews();
     }
-  }, [searchParams, router])
+  }, [currentUser, router]);
 
   const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -147,74 +159,77 @@ export default function Profile() {
     }
   }
 
-  const handleSaveProfile = () => {
-    if (!currentUser) return
-    
-    // Create updated user object
-    const updatedUser = {
-      ...currentUser,
-      name: profileData.name,
-      bio: profileData.bio,
-      location: profileData.location,
-      favoriteShop: profileData.favoriteShop,
-      profileImage: profileData.profileImage,
-      cupCount: cupCount
-    }
-    
-    // Update localStorage for current user
-    localStorage.setItem('currentUser', JSON.stringify(updatedUser))
-    
-    // Update registered users array
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
-    const updatedUsers = registeredUsers.map((user: User) => 
-      user.id === currentUser.id ? updatedUser : user
-    )
-    localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers))
-    
-    // Also update reviews with the new username
-    if (profileData.name !== currentUser.name) {
-      const allReviews = JSON.parse(localStorage.getItem('restaurantReviews') || '[]')
-      const updatedReviews = allReviews.map((review: Review) => 
-        review.userId === currentUser.id 
-          ? { ...review, userName: profileData.name } 
-          : review
-      )
-      localStorage.setItem('restaurantReviews', JSON.stringify(updatedReviews))
-      setUserReviews(updatedReviews.filter((review: Review) => review.userId === currentUser.id))
-    }
-    
-    // Update current user
-    setCurrentUser(updatedUser)
-    setIsEditing(false)
-    
-    // Show success message
-    setSuccessMessage('Profile updated successfully!')
-    setTimeout(() => setSuccessMessage(''), 3000)
-  }
+  const handleSaveProfile = async () => {
+    if (!currentUser) return;
 
-  const handleCupIncrement = () => {
-    const newCount = cupCount + 1
-    setCupCount(newCount)
-    
-    if (currentUser) {
-      // Update cup count in current user
-      const updatedUser = {
-        ...currentUser,
-        cupCount: newCount
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${currentUser.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify({
+          name: profileData.name,
+          bio: profileData.bio,
+          location: profileData.location,
+          favoriteShop: profileData.favoriteShop,
+          profileImage: profileData.profileImage,
+          cupCount: cupCount,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update profile');
       }
-      
-      localStorage.setItem('currentUser', JSON.stringify(updatedUser))
-      
-      // Update registered users array
-      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
-      const updatedUsers = registeredUsers.map((user: User) => 
-        user.id === currentUser.id ? updatedUser : user
-      )
-      localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers))
-      
-      setCurrentUser(updatedUser)
+
+      const updatedUser = await response.json();
+      setCurrentUser(updatedUser);
+      setIsEditing(false);
+      setSuccessMessage('Profile updated successfully!');
+      setTimeout(() => setSuccessMessage(''), 3000);
+    } catch (error) {
+      console.error('Error updating profile:', error);
     }
-  }
+  };
+
+  const handleCupIncrement = async () => {
+    const newCount = cupCount + 1;
+    setCupCount(newCount);
+
+    if (currentUser) {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${currentUser.id}/increment-cup`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to increment cup count');
+        }
+
+        const updatedUser = await response.json();
+        setCurrentUser(updatedUser);
+      } catch (error) {
+        console.error('Error incrementing cup count:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+  const fetchImages = async () => {
+    try {
+      const images = await fetchAvailableImages();
+      setAvailableImages(images);
+    } catch (error) {
+      console.error('Error fetching available images:', error);
+    }
+  };
+
+  fetchImages();
+}, []);
 
   const sortReviews = (reviews: Review[]) => {
     const sortedReviews = [...reviews]
@@ -234,9 +249,9 @@ export default function Profile() {
   }
 
   const getRestaurantName = (restaurantId: number) => {
-    const restaurant = mockRestaurants.find(r => r.id === restaurantId)
-    return restaurant ? restaurant.name : 'Unknown Coffee Shop'
-  }
+    const restaurant = favoriteShops.find((r) => r.id === restaurantId);
+    return restaurant ? restaurant.name : 'Unknown Coffee Shop';
+  };
   
   // Check if user is viewing their own profile
   const isOwnProfile = !searchParams?.get('user') || 
@@ -664,7 +679,7 @@ export default function Profile() {
         <div>
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Recommended For You</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mockRestaurants.slice(0, 3).map(shop => (
+            {recommendations.slice(0, 3).map(shop => (
               <div key={shop.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="h-48 bg-gray-200 relative">
                   <Image
@@ -683,7 +698,7 @@ export default function Profile() {
                   </div>
                   <p className="text-gray-600 text-sm mb-3">{shop.address}</p>
                   <div className="flex flex-wrap gap-1 mb-3">
-                    {shop.tags.slice(0, 2).map(tag => (
+                    {shop.tags.slice(0, 2).map((tag: any) => (
                       <span key={tag.id} className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs">
                         {tag.name}
                       </span>

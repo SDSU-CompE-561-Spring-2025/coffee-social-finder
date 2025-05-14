@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 # this is malak's code
 
 class RestaurantBase(BaseModel):
@@ -6,6 +7,8 @@ class RestaurantBase(BaseModel):
     name: str
     rating: float
     phonenumber: str
+    lat: float  
+    lng: float  
 
 class RestaurantCreate(RestaurantBase):
     pass

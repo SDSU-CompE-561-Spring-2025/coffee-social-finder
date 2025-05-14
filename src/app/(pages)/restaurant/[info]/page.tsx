@@ -1,133 +1,151 @@
-'use client'
+'use client';
 
-import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { useSearchParams, useRouter } from "next/navigation"
-import { mockRestaurants, mockTags } from "@/data/mockData"
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
+import {
+  fetchRestaurantById,
+  fetchReviewsByRestaurantId,
+  submitReview,
+  fetchSimilarRestaurants,
+} from "@/app/_lib/api"; // Import API functions
 
 // Review type definition
 interface Review {
-  id: number
-  restaurantId: number
-  userId: number
-  userName: string
-  rating: number
-  title: string
-  text: string
-  date: string
+  id: number;
+  restaurantId: number;
+  userId: number;
+  userName: string;
+  rating: number;
+  title: string;
+  text: string;
+  date: string;
 }
 
 export default function RestaurantDetailPage() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const [restaurant, setRestaurant] = useState<any>(null)
-  const [reviews, setReviews] = useState<Review[]>([])
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [restaurant, setRestaurant] = useState<any>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [newReview, setNewReview] = useState({
-    title: '',
+    title: "",
     rating: 5,
-    text: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-  const [currentUser, setCurrentUser] = useState<any>(null)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const reviewFormRef = useRef<HTMLDivElement>(null)
+    text: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const reviewFormRef = useRef<HTMLDivElement>(null);
+  const [similarRestaurants, setSimilarRestaurants] = useState<any[]>([]);
 
   useEffect(() => {
     // Get current user from localStorage
-    if (typeof window !== 'undefined') {
-      const userJson = localStorage.getItem('currentUser')
+    if (typeof window !== "undefined") {
+      const userJson = localStorage.getItem("currentUser");
       if (userJson) {
-        setCurrentUser(JSON.parse(userJson))
+        setCurrentUser(JSON.parse(userJson));
       }
     }
 
     // Get restaurant ID from URL query parameter
-    const id = searchParams?.get('id')
-    
+    const id = searchParams?.get("id");
+
     if (id) {
-      // Find restaurant in mock data
-      const foundRestaurant = mockRestaurants.find(r => r.id === parseInt(id))
-      if (foundRestaurant) {
-        setRestaurant(foundRestaurant)
-        
-        // Load restaurant reviews from localStorage
-        if (typeof window !== 'undefined') {
-          const storedReviews = JSON.parse(localStorage.getItem('restaurantReviews') || '[]')
-          const restaurantReviews = storedReviews.filter(
-            (review: Review) => review.restaurantId === parseInt(id)
-          )
-          setReviews(restaurantReviews)
+      // Fetch restaurant details and reviews using API functions
+      const fetchData = async () => {
+        try {
+          const restaurantData = await fetchRestaurantById(id);
+          setRestaurant(restaurantData);
+
+          const reviewsData = await fetchReviewsByRestaurantId(id);
+          setReviews(reviewsData);
+        } catch (error) {
+          console.error(error);
+          router.push("/restaurant"); // Redirect if restaurant not found
         }
-      } else {
-        // Restaurant not found, redirect to restaurants page
-        router.push('/restaurant')
-      }
+      };
+
+      fetchData();
     }
-  }, [searchParams, router])
+  }, [searchParams, router]);
 
   const handleReviewChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setNewReview({
       ...newReview,
-      [name]: name === 'rating' ? parseInt(value) : value
-    })
-  }
+      [name]: name === "rating" ? parseInt(value) : value,
+    });
+  };
 
-  const handleReviewSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!currentUser) {
-      alert('Please log in to submit a review')
-      return
+      alert("Please log in to submit a review");
+      return;
     }
-    
-    if (!restaurant) return
-    
-    setIsSubmitting(true)
-    
-    // Create new review object
-    const reviewData: Review = {
-      id: Date.now(), // Use timestamp as unique ID
-      restaurantId: restaurant.id,
-      userId: currentUser.id || 0,
-      userName: currentUser.name || 'Anonymous',
-      rating: newReview.rating,
-      title: newReview.title,
-      text: newReview.text,
-      date: new Date().toISOString()
+
+    if (!restaurant) return;
+
+    setIsSubmitting(true);
+
+    try {
+      // Submit the new review using the API function
+      const reviewData: Review = {
+        id: Date.now(), // Use timestamp as unique ID
+        restaurantId: restaurant.id,
+        userId: currentUser.id || 0,
+        userName: currentUser.name || "Anonymous",
+        rating: newReview.rating,
+        title: newReview.title,
+        text: newReview.text,
+        date: new Date().toISOString(),
+      };
+
+      const submittedReview = await submitReview(restaurant.id, reviewData);
+
+      // Update the reviews state with the new review
+      setReviews([...reviews, submittedReview]);
+
+      // Reset the form
+      setNewReview({
+        title: "",
+        rating: 5,
+        text: "",
+      });
+
+      setSubmitSuccess(true);
+
+      // Clear success message after 3 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Failed to submit review:", error);
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    // Get existing reviews from localStorage
-    const existingReviews = JSON.parse(localStorage.getItem('restaurantReviews') || '[]')
-    
-    // Add new review
-    const updatedReviews = [...existingReviews, reviewData]
-    
-    // Save to localStorage
-    localStorage.setItem('restaurantReviews', JSON.stringify(updatedReviews))
-    
-    // Update the current page reviews
-    setReviews([...reviews, reviewData])
-    
-    // Reset form
-    setNewReview({
-      title: '',
-      rating: 5,
-      text: ''
-    })
-    
-    setIsSubmitting(false)
-    setSubmitSuccess(true)
-    
-    // Clear success message after 3 seconds
-    setTimeout(() => {
-      setSubmitSuccess(false)
-    }, 3000)
-  }
+  };
+
+  useEffect(() => {
+    if (restaurant) {
+      // Fetch similar restaurants
+      const fetchData = async () => {
+        try {
+          const data = await fetchSimilarRestaurants(restaurant.id);
+          setSimilarRestaurants(data);
+        } catch (error) {
+          console.error("Failed to fetch similar restaurants:", error);
+        }
+      };
+
+      fetchData();
+    }
+  }, [restaurant]);
 
   const scrollToReviewForm = () => {
     if (reviewFormRef.current) {
@@ -547,21 +565,18 @@ export default function RestaurantDetailPage() {
         
         {/* Similar Coffee Shops Section */}
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">You Might Also Like</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mockRestaurants
-              .filter(r => r.id !== restaurant.id)
-              .slice(0, 3)
-              .map(shop => (
-                <div key={shop.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <div className="h-48 bg-gray-200 relative">
-                    <Image
-                      src={`/assets/shop${(shop.id % 2) + 1}.svg`}
-                      alt={shop.name}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">You Might Also Like</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {similarRestaurants.map((shop) => (
+            <div key={shop.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="h-48 bg-gray-200 relative">
+                <Image
+                  src={shop.image[0]} // Assuming the backend provides an array of images
+                  alt={shop.name}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-bold">{shop.name}</h3>
@@ -571,7 +586,7 @@ export default function RestaurantDetailPage() {
                     </div>
                     <p className="text-gray-600 text-sm mb-3">{shop.address}</p>
                     <div className="flex flex-wrap gap-1 mb-3">
-                      {shop.tags.slice(0, 2).map(tag => (
+                      {shop.tags.slice(0, 2).map((tag: any) => (
                         <span key={tag.id} className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs">
                           {tag.name}
                         </span>

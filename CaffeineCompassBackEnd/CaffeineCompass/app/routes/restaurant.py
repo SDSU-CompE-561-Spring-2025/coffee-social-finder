@@ -6,6 +6,12 @@ from app.core.database import get_db
 
 router = APIRouter(prefix="/restaurants", tags=["restaurants"])
 
+
+@router.get("/restaurants")
+async def get_restaurants():
+    # Your logic to fetch and return coffee shops
+    return [{"id": "1", "name": "Coffee Shop 1"}]
+
 @router.get("/{restaurant_id}", response_model=Restaurant)
 def read_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
     db_restaurant = get_restaurant(db, restaurant_id)
@@ -20,7 +26,9 @@ def create_new_restaurant(restaurant: RestaurantCreate, db: Session = Depends(ge
         address=restaurant.address,
         name=restaurant.name,
         rating=restaurant.rating,
-        phonenumber=restaurant.phonenumber
+        phonenumber=restaurant.phonenumber,
+        lat=restaurant.lat,
+        lng=restaurant.lng
     )
 
 @router.put("/{restaurant_id}", response_model=Restaurant)
@@ -35,6 +43,8 @@ def update_existing_restaurant(restaurant_id: int, restaurant: RestaurantUpdate,
         name=restaurant.name,
         rating=restaurant.rating,
         phonenumber=restaurant.phonenumber,
+        lat=restaurant.lat,
+        lng=restaurant.lng
     )
 
 @router.delete("/{restaurant_id}", response_model=dict)

@@ -1,3 +1,5 @@
+/*
+
 import { Restaurant, Tag } from "@/types";
 import Image from "next/image";
 
@@ -94,3 +96,4 @@ export const mockRestaurants: Restaurant[] = [
     ],
   },
 ];
+*/
