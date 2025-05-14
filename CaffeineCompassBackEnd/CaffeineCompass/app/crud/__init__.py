@@ -27,20 +27,6 @@ from app.crud.tag import (
     delete_tag
 )
 
-from app.crud.bookmark import (
-    get_bookmark,
-    create_bookmark,
-    update_bookmark,
-    delete_bookmark
-)
-
-from app.crud.cosmetic import (
-    get_cosmetic,
-    create_cosmetic,
-    update_cosmetic,
-    delete_cosmetic
-)
-
 from app.crud.address import (
     get_address,
     create_address,

@@ -2,18 +2,24 @@ from sqlalchemy.orm import Session
 from typing import Optional
 from datetime import datetime
 from app.models.user import User
+from fastapi import HTTPException, status
 
 def get_user(db: Session, user_id: int):
-    return db.query(User).filter(User.id == user_id).first()
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User with id {user_id} not found",
+        )
+    return user
 
 def get_user_by_email(db: Session, email: str):
     return db.query(User).filter(User.email == email).first()
 
+
 def create_user(db: Session, name: str, email: str, password: str, 
                 created_at: Optional[datetime] = None, 
-                bookmark_id: Optional[int] = None,
                 filtered_tags_id: Optional[int] = None,
-                cosmetics_id: Optional[int] = None,
                 comment_id: Optional[int] = None):
     if created_at is None:
         created_at = datetime.utcnow()
@@ -22,9 +28,7 @@ def create_user(db: Session, name: str, email: str, password: str,
         email=email,
         password=password,
         created_at=created_at,
-        bookmark_id=bookmark_id,
         filtered_tags_id=filtered_tags_id,
-        cosmetics_id=cosmetics_id,
         comment_id=comment_id
     )
     db.add(db_user)

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, status, Depends, HTTPException, Request
 from app.core.database import engine, Base
-from app.routes import user, restaurant, comment, tag, bookmark, cosmetic, address
+from app.routes import user, restaurant, comment, tag, address
 from sqlalchemy.orm import Session
 import time
 from fastapi.middleware.cors import CORSMiddleware
@@ -44,6 +44,4 @@ app.include_router(auth_router, prefix="/auth")
 app.include_router(restaurant.router, prefix="/restaurants")
 app.include_router(comment.router, prefix="/comments")
 app.include_router(tag.router, prefix="/tags")
-app.include_router(bookmark.router, prefix="/bookmarks")
-app.include_router(cosmetic.router, prefix="/cosmetics")
 app.include_router(address.router, prefix="/addresses")
