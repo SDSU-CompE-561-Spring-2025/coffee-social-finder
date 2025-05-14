@@ -1,11 +1,11 @@
-from .user_schema import User, UserCreate, UserUpdate
+from .user_schema import UserBase, UserCreate, UserUpdate
 from .restaurant_schema import Restaurant, RestaurantCreate, RestaurantUpdate
 from .comment_schema import Comment, CommentCreate, CommentUpdate
 from .tag_schema import Tag, TagCreate, TagUpdate
 from .address_schema import Address, AddressCreate, AddressUpdate
 
 __all__ = [
-    "User", "UserCreate", "UserUpdate",
+    "UserBase", "UserCreate", "UserUpdate",
     "Restaurant", "RestaurantCreate", "RestaurantUpdate",
     "Comment", "CommentCreate", "CommentUpdate",
     "Tag", "TagCreate", "TagUpdate",
