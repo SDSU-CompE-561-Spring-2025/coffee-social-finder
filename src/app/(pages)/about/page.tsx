@@ -22,15 +22,15 @@ export default function AboutPage() {
               
               <div>
                 <p className="text-gray-700 mb-4">
-                  caffeine compass helps coffee enthusiasts discover the perfect cup in their area. our mission is to connect people with local coffee shops that match their preferences.
+                  Caffeine compass helps coffee enthusiasts discover the perfect cup in their area. Our mission is to connect people with local coffee shops that match their preferences.
                 </p>
                 
                 <p className="text-gray-700 mb-4">
-                  founded in 2023, we've grown to feature hundreds of coffee shops across the country, with detailed information, ratings, and reviews from our community.
+                  Founded in 2023, we've grown to feature hundreds of coffee shops across the country, with detailed information, ratings, and reviews from our community.
                 </p>
                 
                 <p className="text-gray-700">
-                  whether you're looking for a cozy spot to read, a quiet place to work, or simply the best espresso in town, caffeine compass helps you find your way.
+                  Whether you're looking for a cozy spot to read, a quiet place to work, or simply the best espresso in town, caffeine compass helps you find your way.
                 </p>
               </div>
             </div>
@@ -41,17 +41,17 @@ export default function AboutPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-amber-50 p-4 rounded-lg">
                   <h3 className="font-bold text-amber-900 mb-2">Search</h3>
-                  <p className="text-gray-700">find coffee shops by name, location, or amenities</p>
+                  <p className="text-gray-700">Find coffee shops by name, location, or amenities</p>
                 </div>
                 
                 <div className="bg-amber-50 p-4 rounded-lg">
                   <h3 className="font-bold text-amber-900 mb-2">Reviews</h3>
-                  <p className="text-gray-700">read authentic reviews from our community of coffee lovers</p>
+                  <p className="text-gray-700">Read authentic reviews from our community of coffee lovers</p>
                 </div>
                 
                 <div className="bg-amber-50 p-4 rounded-lg">
                   <h3 className="font-bold text-amber-900 mb-2">Maps</h3>
-                  <p className="text-gray-700">locate coffee shops near you with our interactive map</p>
+                  <p className="text-gray-700">Locate coffee shops near you with our interactive map</p>
                 </div>
               </div>
             </div>
@@ -59,7 +59,7 @@ export default function AboutPage() {
             <div className="border-t border-gray-200 pt-8">
               <h2 className="text-2xl font-bold text-amber-900 mb-4">Contact Us</h2>
               <p className="text-gray-700 mb-6">
-                have questions or suggestions? we'd love to hear from you.
+                Have questions or suggestions? We'd love to hear from you.
               </p>
               
               <address className="not-italic text-gray-700">
