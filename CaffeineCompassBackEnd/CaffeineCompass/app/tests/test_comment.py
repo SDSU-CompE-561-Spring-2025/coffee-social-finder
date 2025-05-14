@@ -2,11 +2,18 @@ import pytest
 from app.models.comment import Comment
 from datetime import datetime, timezone
 
-
-# test will fail if relationship is not commented out
 def test_comment():
     now = datetime.now(timezone.utc)
-    comment = Comment(id = 1, content = "Test comment", title = "Test comment",   created_at = now) 
+    
+    comment = Comment(
+        id=1,
+        content="Test comment",
+        title="Test comment",
+        created_at=now,
+        restaurant_id=1,  # provide required FK
+        user_id=1,        # provide required FK
+        tag_id=1          # provide required FK
+    )
 
     assert comment.id == 1
     assert comment.content == "Test comment"
