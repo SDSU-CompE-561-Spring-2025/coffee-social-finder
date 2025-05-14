@@ -27,7 +27,8 @@ class Tag(Base):
     __tablename__ = "tag"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(50), unique = True, nullable= False)
+    name = Column(String(50), unique=True, nullable=False)
+    description = Column(String(255))  # <-- Add this line
 
-    restaurants = relationship("Restaurant",secondary= restaurant_tag_association, back_populates = "tags")
-    comments = relationship("Comment", back_populates = "tags")
+    restaurants = relationship("Restaurant", secondary=restaurant_tag_association, back_populates="tags")
+    comments = relationship("Comment", back_populates="tags")

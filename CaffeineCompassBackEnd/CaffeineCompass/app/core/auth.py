@@ -60,8 +60,12 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     token = create_access_token(user.username, user.id, timedelta(minutes=30))
     return {"access_token": token, "token_type": "bearer"}
 
+from sqlalchemy import or_
+
 def authenticate_user(db: Session, username: str, password: str):
-    user = db.query(User).filter(User.username == username).first()
+    user = db.query(User).filter(
+        or_(User.username == username, User.email == username)
+    ).first()
     if not user:
         return False
     if not bcrypt_context.verify(password, user.hashed_password):

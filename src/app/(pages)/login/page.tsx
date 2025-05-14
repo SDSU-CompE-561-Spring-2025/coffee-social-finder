@@ -8,9 +8,10 @@ import { notifyAuthChange } from '@/components/Navbar'
 
 export default function LoginPage() {
   const router = useRouter()
-  const [form, setForm] = useState({ email: '', password: '' })
+
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [form, setForm] = useState({ email: '', password: '' })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -19,70 +20,31 @@ export default function LoginPage() {
     e.preventDefault()
     setIsLoading(true)
     setError('')
-    
     try {
-      // MOCK MODE: Enable this when backend is not available
-      const useMockMode = false; // Set to false when backend is working
-      
-      if (useMockMode) {
-        // Simulate a brief delay like a real API call
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        // Get registered users from localStorage (if any)
-        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-        
-        // Find if user exists with matching email and password
-        const user = registeredUsers.find((u: any) => 
-          u.email === form.email && u.password === form.password
-        );
-        
-        if (!user) {
-          throw new Error('Invalid email or password');
-        }
-        
-        // Mock success - store logged in state
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        console.log('Login successful (MOCK MODE):', user);
-        
-        // Notify auth state change
-        notifyAuthChange();
-        
-        // Redirect to homepage after successful login
-        router.push('/');
-      } else {
-        // Real backend API call - uncomment this when backend is working
-        const response = await fetch('http://127.0.0.1:8000/auth/token', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: new URLSearchParams({
-            username: form.email,
-            password: form.password,
-          }),
-        });
+      const response = await fetch('http://127.0.0.1:8000/auth/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          username: form.email,
+          password: form.password,
+        }),
+      })
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.detail || 'Failed to login');
-        }
-
-        // Handle successful login
-        const data = await response.json();
-        localStorage.setItem('token', data.access_token);
-        console.log('Login successful:', data);
-        
-        // Notify auth state change
-        notifyAuthChange();
-        
-        // Redirect to homepage after successful login
-        router.push('/');
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.detail || 'Failed to login')
       }
+
+      const data = await response.json()
+      localStorage.setItem('token', data.access_token)
+      notifyAuthChange()
+      router.push('/')
     } catch (err) {
-      console.error('Login error:', err);
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      setError(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 

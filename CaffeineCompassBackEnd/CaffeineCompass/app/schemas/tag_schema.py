@@ -1,7 +1,9 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class TagBase(BaseModel):
     name: str
+    description: Optional[str] = None
 
 class TagCreate(TagBase):
     pass
@@ -12,6 +14,5 @@ class TagUpdate(TagBase):
 class Tag(TagBase):
     id: int
 
-    model_config = {
-        "from_attributes": True  
-    }
+    class Config:
+        orm_mode = True

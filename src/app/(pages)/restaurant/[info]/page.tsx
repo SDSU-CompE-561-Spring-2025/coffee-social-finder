@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
@@ -9,9 +8,8 @@ import {
   fetchReviewsByRestaurantId,
   submitReview,
   fetchSimilarRestaurants,
-} from "@/app/_lib/api"; // Import API functions
+} from "@/app/_lib/api";
 
-// Review type definition
 interface Review {
   id: number;
   restaurantId: number;
@@ -36,12 +34,11 @@ export default function RestaurantDetailPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const reviewFormRef = useRef<HTMLDivElement>(null);
   const [similarRestaurants, setSimilarRestaurants] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Get current user from localStorage
     if (typeof window !== "undefined") {
       const userJson = localStorage.getItem("currentUser");
       if (userJson) {
@@ -49,11 +46,9 @@ export default function RestaurantDetailPage() {
       }
     }
 
-    // Get restaurant ID from URL query parameter
     const id = searchParams?.get("id");
 
     if (id) {
-      // Fetch restaurant details and reviews using API functions
       const fetchData = async () => {
         try {
           const restaurantData = await fetchRestaurantById(id);
@@ -63,7 +58,7 @@ export default function RestaurantDetailPage() {
           setReviews(reviewsData);
         } catch (error) {
           console.error(error);
-          router.push("/restaurant"); // Redirect if restaurant not found
+          //router.push("/restaurant");
         }
       };
 
@@ -94,9 +89,8 @@ export default function RestaurantDetailPage() {
     setIsSubmitting(true);
 
     try {
-      // Submit the new review using the API function
       const reviewData: Review = {
-        id: Date.now(), // Use timestamp as unique ID
+        id: Date.now(),
         restaurantId: restaurant.id,
         userId: currentUser.id || 0,
         userName: currentUser.name || "Anonymous",
@@ -108,10 +102,8 @@ export default function RestaurantDetailPage() {
 
       const submittedReview = await submitReview(restaurant.id, reviewData);
 
-      // Update the reviews state with the new review
       setReviews([...reviews, submittedReview]);
 
-      // Reset the form
       setNewReview({
         title: "",
         rating: 5,
@@ -120,7 +112,6 @@ export default function RestaurantDetailPage() {
 
       setSubmitSuccess(true);
 
-      // Clear success message after 3 seconds
       setTimeout(() => {
         setSubmitSuccess(false);
       }, 3000);
@@ -133,7 +124,6 @@ export default function RestaurantDetailPage() {
 
   useEffect(() => {
     if (restaurant) {
-      // Fetch similar restaurants
       const fetchData = async () => {
         try {
           const data = await fetchSimilarRestaurants(restaurant.id);
@@ -151,18 +141,6 @@ export default function RestaurantDetailPage() {
     if (reviewFormRef.current) {
       reviewFormRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  }
-
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === restaurant.image.length - 1 ? 0 : prevIndex + 1
-    )
-  }
-
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) => 
-      prevIndex === 0 ? restaurant.image.length - 1 : prevIndex - 1
-    )
   }
 
   if (!restaurant) {
@@ -184,14 +162,12 @@ export default function RestaurantDetailPage() {
     )
   }
 
-  // Calculate average rating from reviews
   const averageRating = reviews.length > 0
     ? (reviews.reduce((total, review) => total + review.rating, 0) / reviews.length).toFixed(1)
-    : restaurant.rating.toFixed(1)
+    : restaurant.rating?.toFixed(1) || "0.0"
 
   return (
     <div className="min-h-screen bg-[#f8f5f0]">
-      {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="mb-6">
           <Link href="/restaurant" className="text-amber-700 hover:text-amber-900 font-medium inline-flex items-center">
@@ -204,64 +180,8 @@ export default function RestaurantDetailPage() {
 
         <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8">
           <div className="md:flex">
-            {/* Restaurant Image Carousel */}
-            <div className="md:w-1/2 relative">
-              <div className="h-72 md:h-full relative">
-                {restaurant.image.map((src:string, index: number) => (
-                  <div
-                    key={index}
-                    className={`absolute inset-0 transition-opacity duration-500 ${
-                      index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                    }`}
-                  >
-                    <Image
-                      src={src}
-                      alt={`${restaurant.name} - image ${index + 1}`}
-                      layout="fill"
-                      objectFit="cover"
-                      priority={index === 0}
-                    />
-                  </div>
-                ))}
-                
-                {/* Carousel controls */}
-                <button
-                  onClick={prevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
-                  aria-label="Previous image"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-                  </svg>
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
-                  aria-label="Next image"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                  </svg>
-                </button>
-                
-                {/* Carousel indicators */}
-                <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                  {restaurant.image.map((src: string, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`w-2.5 h-2.5 rounded-full ${
-                        index === currentImageIndex ? 'bg-white' : 'bg-white bg-opacity-50'
-                      }`}
-                      aria-label={`Go to image ${index + 1}`}
-                    ></button>
-                  ))}
-                </div>
-              </div>
-            </div>
-            
-            {/* Restaurant Info */}
-            <div className="md:w-1/2 p-6 md:p-8">
+            {/* Restaurant Info (no image) */}
+            <div className="md:w-full p-6 md:p-8">
               <div className="flex justify-between items-start mb-4">
                 <h1 className="text-3xl font-bold text-gray-900 font-serif">{restaurant.name}</h1>
                 <div className="bg-amber-100 text-amber-800 px-3 py-1.5 rounded-full text-sm font-medium">
@@ -298,8 +218,8 @@ export default function RestaurantDetailPage() {
               <div className="mb-6">
                 <h2 className="text-xl font-semibold mb-2 text-gray-900">About</h2>
                 <p className="text-gray-700">
-                  {restaurant.name} is a cozy coffee shop located in {restaurant.address.split(',')[0]}. 
-                  Known for their exceptional {restaurant.tags.map((t: {id: number, name: string}) => t.name.toLowerCase()).join(', ')}, 
+                  {restaurant.name} is a cozy coffee shop located in {restaurant.address?.split(',')[0]}. 
+                  Known for their exceptional {restaurant.tags?.map((t: {id: number, name: string}) => t.name.toLowerCase()).join(', ')}, 
                   they offer a welcoming atmosphere for coffee lovers of all kinds.
                 </p>
               </div>
@@ -307,7 +227,7 @@ export default function RestaurantDetailPage() {
               <div className="mb-6">
                 <h2 className="text-xl font-semibold mb-2 text-gray-900">Tags</h2>
                 <div className="flex flex-wrap gap-2">
-                  {restaurant.tags.map((tag: any) => (
+                  {restaurant.tags?.map((tag: any) => (
                     <Link 
                       key={tag.id} 
                       href={`/restaurant?tag=${tag.id}`}
@@ -569,39 +489,35 @@ export default function RestaurantDetailPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {similarRestaurants.map((shop) => (
             <div key={shop.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="h-48 bg-gray-200 relative">
-                <Image
-                  src={shop.image[0]} // Assuming the backend provides an array of images
-                  alt={shop.name}
-                  layout="fill"
-                  objectFit="cover"
-                />
+              <div className="h-48 bg-gray-200 relative flex items-center justify-center text-gray-400 text-lg">
+                {/* No image */}
+                No image available
               </div>
-                  <div className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg font-bold">{shop.name}</h3>
-                      <div className="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-sm">
-                        ★ {shop.rating}
-                      </div>
-                    </div>
-                    <p className="text-gray-600 text-sm mb-3">{shop.address}</p>
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {shop.tags.slice(0, 2).map((tag: any) => (
-                        <span key={tag.id} className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs">
-                          {tag.name}
-                        </span>
-                      ))}
-                    </div>
-                    <Link
-                      href={`/restaurant/info?id=${shop.id}`}
-                      className="text-amber-700 hover:text-amber-900 text-sm font-medium"
-                    >
-                      View Details →
-                    </Link>
+              <div className="p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-lg font-bold">{shop.name}</h3>
+                  <div className="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-sm">
+                    ★ {shop.rating}
                   </div>
                 </div>
-              ))}
-          </div>
+                <p className="text-gray-600 text-sm mb-3">{shop.address}</p>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {shop.tags?.slice(0, 2).map((tag: any) => (
+                    <span key={tag.id} className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs">
+                      {tag.name}
+                    </span>
+                  ))}
+                </div>
+                <Link
+                  href={`/restaurant/info?id=${shop.id}`}
+                  className="text-amber-700 hover:text-amber-900 text-sm font-medium"
+                >
+                  View Details →
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
         </div>
       </main>
     </div>

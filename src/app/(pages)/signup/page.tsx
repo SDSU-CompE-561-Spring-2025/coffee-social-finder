@@ -25,105 +25,43 @@ export default function SignUpPage() {
     e.preventDefault()
     setIsLoading(true)
     setError('')
-    
     try {
-      // Prepare the data for the backend API
       const userData = {
-        name: `${form.firstName} ${form.lastName}`, // Combine first and last name
+        username: `${form.firstName}${form.lastName}`.replace(/\s/g, ''),
         email: form.email,
         password: form.password,
-        joinDate: new Date().toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }),
-        created_at: new Date().toISOString(), // Current timestamp
-        bookmark_id: 0, // Default values for required fields
-        filtered_tags_id: 0,
-        cosmetics_id: 0,
-        comment_id: 0,
-        cupCount: 0,
-        bio: 'Tell others about yourself...',
-        location: 'Add your location',
-        id: Date.now() // Use timestamp as unique ID
       }
 
-      // MOCK MODE: Enable this when backend is not available
-      const useMockMode = false; // Set to false when backend is working
-      
-      if (useMockMode) {
-        // Simulate a brief delay like a real API call
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        // Validate email format
-        if (!form.email.includes('@')) {
-          setError('Please enter a valid email address');
-          return;
-        }
-        
-        // Get existing registered users or initialize empty array
-        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-        
-        // Check if email already exists
-        const emailExists = registeredUsers.some((user: any) => user.email === form.email);
-        if (emailExists) {
-          setError('Email already registered');
-          return;
-        }
-        
-        // Add new user to the array
-        registeredUsers.push(userData);
-        
-        // Save updated array back to localStorage
-        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-        
-        // Also log in the user automatically
-        localStorage.setItem('currentUser', JSON.stringify(userData));
-        
-        // Notify auth state change
-        notifyAuthChange();
-        
-        // Log success
-        console.log('Account created (MOCK MODE):', userData);
-        setSuccess(true);
-        
-        // Redirect to homepage after successful signup
-        setTimeout(() => {
-          router.push('/');
-        }, 1500);
-      } else {
-        // Real backend API call - uncomment this when backend is working
-        const response = await fetch('http://127.0.0.1:8000/users/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        })
+      const response = await fetch('http://127.0.0.1:8000/auth/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      })
 
-        if (!response.ok) {
-          const errorData = await response.json()
-          throw new Error(errorData.detail || 'Failed to create account')
+      if (!response.ok) {
+        const errorData = await response.json()
+        let errorMsg = 'Failed to create account'
+        if (typeof errorData.detail === 'string') {
+          errorMsg = errorData.detail
+        } else if (typeof errorData.detail === 'object') {
+          errorMsg = JSON.stringify(errorData.detail)
         }
-
-        // Handle success
-        const data = await response.json()
-        console.log('Account created:', data)
-        setSuccess(true)
-        
-        // Redirect to homepage after successful signup
-        setTimeout(() => {
-          router.push('/');
-        }, 1500);
+        throw new Error(errorMsg)
       }
+
+      setSuccess(true)
+      notifyAuthChange()
+      setTimeout(() => {
+        router.push('/')
+      }, 1500)
     } catch (err) {
-      console.error('Error creating account:', err)
       setError(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
       setIsLoading(false)
     }
   }
-
   return (
     <div className="min-h-screen bg-[#f8f5f0] relative">
       {/* Custom header to replace the navbar */}
