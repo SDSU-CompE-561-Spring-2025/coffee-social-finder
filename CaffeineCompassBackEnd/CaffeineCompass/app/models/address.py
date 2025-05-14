@@ -15,5 +15,4 @@ class Address(Base):
 
     user_id = Column(Integer, ForeignKey("users.id"))
 
-    # comment this out for the test to work
     user = relationship("User", back_populates = "addresses")
