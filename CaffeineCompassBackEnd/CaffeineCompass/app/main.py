@@ -58,13 +58,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class TrailingSlashMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request, call_next):
-        if not request.url.path.endswith("/") and request.url.path != "/":
-            return RedirectResponse(url=f"{request.url.path}/")
-        return await call_next(request)
+#class #TrailingSlashMiddleware(BaseHTTPMiddleware):
+    #async def dispatch(self, request, call_next):
+        #if not request.url.path.endswith("/") and request.url.path != "/":
+           #return RedirectResponse(url=f"{request.url.path}/")
+        #return await call_next(request)
 
-app.add_middleware(TrailingSlashMiddleware)
+#app.add_middleware(TrailingSlashMiddleware)
 
 # Middleware to measure request processing time
 @app.middleware("http")
