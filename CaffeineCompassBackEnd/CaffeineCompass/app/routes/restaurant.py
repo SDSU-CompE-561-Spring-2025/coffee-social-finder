@@ -20,9 +20,7 @@ def create_new_restaurant(restaurant: RestaurantCreate, db: Session = Depends(ge
         address=restaurant.address,
         name=restaurant.name,
         rating=restaurant.rating,
-        phonenumber=restaurant.phonenumber,
-        filtered_tags_id=restaurant.filtered_tags_id,
-        comment_id=restaurant.comment_id,
+        phonenumber=restaurant.phonenumber
     )
 
 @router.put("/{restaurant_id}", response_model=Restaurant)
@@ -37,8 +35,6 @@ def update_existing_restaurant(restaurant_id: int, restaurant: RestaurantUpdate,
         name=restaurant.name,
         rating=restaurant.rating,
         phonenumber=restaurant.phonenumber,
-        filtered_tags_id=restaurant.filtered_tags_id,
-        comment_id=restaurant.comment_id,
     )
 
 @router.delete("/{restaurant_id}", response_model=dict)

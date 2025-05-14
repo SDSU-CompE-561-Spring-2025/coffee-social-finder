@@ -3,7 +3,7 @@ from typing import Optional
 from app.models.address import Address
 
 def get_address(db: Session, address_id: int):
-    return db.query(Address).filter(Address.address_id == address_id).first()
+    return db.query(Address).filter(Address.id == address_id).first()
 
 def create_address(db: Session, street: str, city: str, state: str, zip_code: str):
     db_address = Address(
@@ -20,7 +20,7 @@ def create_address(db: Session, street: str, city: str, state: str, zip_code: st
 def update_address(db: Session, address_id: int, street: Optional[str] = None, 
                    city: Optional[str] = None, state: Optional[str] = None,
                    zip_code: Optional[str] = None):
-    db_address = db.query(Address).filter(Address.address_id == address_id).first()
+    db_address = db.query(Address).filter(Address.id == address_id).first()
     if not db_address:
         return None
     if street is not None:
@@ -36,7 +36,7 @@ def update_address(db: Session, address_id: int, street: Optional[str] = None,
     return db_address
 
 def delete_address(db: Session, address_id: int):
-    db_address = db.query(Address).filter(Address.address_id == address_id).first()
+    db_address = db.query(Address).filter(Address.id == address_id).first()
     if not db_address:
         return False
     db.delete(db_address)

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Annotated
 from starlette import status
 from fastapi import Depends, HTTPException, APIRouter
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from app.core.database import get_db
@@ -11,6 +11,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from app.models.user import User
 from app.core.database import SessionLocal
 from app.core.config import settings
+from app.core.security import get_password_hash
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -24,9 +25,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 class CreateUser(BaseModel):
     username: str
-    email: str
+    email: EmailStr
     password: str
-    created_at: datetime = datetime.now()
 
 
 class Token(BaseModel):
@@ -40,8 +40,7 @@ async def create_user(db: db_dependency, create_user_request: CreateUser):
     user = User(
         username=create_user_request.username,
         email=create_user_request.email,
-        hashed_password=bcrypt_context.hash(create_user_request.password),  # Updated field name
-        created_at=create_user_request.created_at,
+        hashed_password=get_password_hash(create_user_request.password)
     )
     db.add(user)
     db.commit()
@@ -61,11 +60,11 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     token = create_access_token(user.username, user.id, timedelta(minutes=30))
     return {"access_token": token, "token_type": "bearer"}
 
-def authenticate_user(username: str, password: str, db):
+def authenticate_user(db: Session, username: str, password: str):
     user = db.query(User).filter(User.username == username).first()
     if not user:
         return False
-    if not bcrypt_context.verify(password, user.password):
+    if not bcrypt_context.verify(password, user.hashed_password):
         return False
     return user
     

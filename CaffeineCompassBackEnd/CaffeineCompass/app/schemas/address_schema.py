@@ -13,7 +13,7 @@ class AddressUpdate(AddressBase):
     pass
 
 class Address(AddressBase):
-    address_id: int
+    id: int
 
     class Config:
         orm_mode = True
