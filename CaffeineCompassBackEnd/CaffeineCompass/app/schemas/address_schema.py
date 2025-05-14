@@ -15,6 +15,7 @@ class AddressUpdate(AddressBase):
 class Address(AddressBase):
     id: int
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True  
+    }
 
