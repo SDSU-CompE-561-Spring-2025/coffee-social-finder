@@ -130,7 +130,7 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full p-4 pt-6 pb-2 bg-white rounded-md border-2 border-amber-200 focus:border-amber-400 focus:outline-none text-lg"
+                className="w-full p-4 pt-6 pb-2 bg-white rounded-md border-2 border-amber-200 focus:border-amber-400 focus:outline-none text-lg text-black"
               />
               <label 
                 htmlFor="email" 
@@ -149,7 +149,7 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full p-4 pt-6 pb-2 bg-white rounded-md border-2 border-amber-200 focus:border-amber-400 focus:outline-none text-lg"
+                className="w-full p-4 pt-6 pb-2 bg-white rounded-md border-2 border-amber-200 focus:border-amber-400 focus:outline-none text-lg text-black"
               />
               <label 
                 htmlFor="password" 
