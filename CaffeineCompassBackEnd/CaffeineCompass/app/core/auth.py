@@ -52,7 +52,7 @@ async def create_user(db: db_dependency, create_user_request: CreateUser):
 @router.post("/token", response_model=Token)
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: db_dependency):
-    user = authenticate_user(db, form_data.username, form_data.password,db)
+    user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

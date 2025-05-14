@@ -3,6 +3,9 @@ from typing import Optional
 from datetime import datetime
 from app.models.user import User
 from fastapi import HTTPException, status
+from app.core.security import get_password_hash
+from sqlalchemy.exc import IntegrityError
+
 
 def get_user(db: Session, user_id: int):
     user = db.query(User).filter(User.id == user_id).first()
@@ -16,25 +19,27 @@ def get_user(db: Session, user_id: int):
 def get_user_by_email(db: Session, email: str):
     return db.query(User).filter(User.email == email).first()
 
+def create_user(db: Session, name: str, email: str, password: str):
+    existing_user = db.query(User).filter(User.email == email).first()
+    if existing_user:
+        raise ValueError("A user with this email already exists.")
 
-def create_user(db: Session, name: str, email: str, password: str, 
-                created_at: Optional[datetime] = None, 
-                filtered_tags_id: Optional[int] = None,
-                comment_id: Optional[int] = None):
-    if created_at is None:
-        created_at = datetime.utcnow()
     db_user = User(
-        name=name,
+        username=name,
         email=email,
-        password=password,
-        created_at=created_at,
-        filtered_tags_id=filtered_tags_id,
-        comment_id=comment_id
+        hashed_password=get_password_hash(password)
     )
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
+
+    try:
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+    except IntegrityError as e:
+        db.rollback()
+        raise ValueError("Could not create user: Email must be unique.") from e
+
+
 
 def update_user(db: Session, user_id: int, name: Optional[str] = None, 
                 email: Optional[str] = None):
@@ -56,3 +61,6 @@ def delete_user(db: Session, user_id: int):
     db.delete(db_user)
     db.commit()
     return True
+
+def get_users(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(User).offset(skip).limit(limit).all()

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.crud.user import get_user, create_user, update_user, delete_user
+from app.crud.user import get_user, get_users, create_user, update_user, delete_user
 from app.schemas.user_schema import UserBase, UserCreate, UserUpdate, UserOut
 from app.core.database import get_db
 
@@ -8,7 +8,7 @@ router = APIRouter()
 
 @router.get("/", response_model=list[UserOut])
 def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return get_user(db, skip=skip, limit=limit)
+    return get_users(db, skip=skip, limit=limit)
 
 @router.get("/{user_id}", response_model=UserOut)
 def read_user(user_id: int, db: Session = Depends(get_db)):
@@ -16,7 +16,12 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=UserOut)
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
-    return create_user(db, user)
+    return create_user(
+        db=db,
+        name=user.username,  # or `user.name` if your model uses that
+        email=user.email,
+        password=user.password
+    )
 
 @router.put("/{user_id}", response_model=UserOut)
 def update_existing_user(user_id: int, user_update: UserUpdate, db: Session = Depends(get_db)):
