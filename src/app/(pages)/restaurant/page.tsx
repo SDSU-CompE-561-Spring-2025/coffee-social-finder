@@ -15,76 +15,79 @@ export default function RestaurantsPage() {
   const [tagFilter, setTagFilter] = useState<number | null>(null);
   const [tagName, setTagName] = useState('');
   const [sortBy, setSortBy] = useState('default'); // 'default', 'name', 'rating'
-  const [sortDirection, setSortDirection] = useState('desc'); // 'asc', 'desc'
+  const [sortDirection, setSortDirection] = useState('desc'); // 'asc', 'desc'+
+  
 
-  // Fetch restaurants from the backend
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCoffeeShops = async () => {
       try {
-        const data = await fetchRestaurants(); // Fetch all restaurants
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/restaurants/`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch coffee shops');
+        }
+        const data = await response.json();
         setRestaurants(data);
-        setFilteredRestaurants(data); // Initially, all restaurants are displayed
       } catch (error) {
-        console.error('Failed to fetch restaurants:', error);
+        console.error('Error fetching coffee shops:', error);
       }
     };
 
-    fetchData();
+    fetchCoffeeShops();
   }, []);
 
   // Apply filters and sorting
-  useEffect(() => {
-    const urlSearch = searchParams?.get('search') || '';
-    const tagParam = searchParams?.get('tag');
-    const tagId = tagParam ? parseInt(tagParam) : null;
+    useEffect(() => {
+      const urlSearch = searchParams?.get('search') || '';
+      const tagParam = searchParams?.get('tag');
+      const tagId = tagParam ? parseInt(tagParam) : null;
 
-    const query = urlSearch || '';
-    setSearchQuery(query);
-    setTagFilter(tagId);
+      const query = urlSearch || '';
+      setSearchQuery(query);
+      setTagFilter(tagId);
 
-    // Get tag name if filtering by tag
-    if (tagId) {
-      const tag = restaurants.flatMap((r) => r.tags).find((t) => t.id === tagId);
-      setTagName(tag ? tag.name : '');
-    } else {
-      setTagName('');
-    }
+      // Get tag name if filtering by tag
+      if (tagId) {
+        const tag = restaurants.flatMap((r) => r.tags).find((t) => t.id === tagId);
+        setTagName(tag ? tag.name : '');
+      } else {
+        setTagName('');
+      }
 
-    // Apply filters
-    let filtered = [...restaurants];
+      // Apply filters
+      let filtered = [...restaurants];
 
-    // Filter by search query if present
-    if (query) {
-      const searchLower = query.toLowerCase();
-      filtered = filtered.filter(
-        (restaurant) =>
-          restaurant.name.toLowerCase().includes(searchLower) ||
-          restaurant.address.toLowerCase().includes(searchLower) ||
-          restaurant.tags.some((tag: any) => tag.name.toLowerCase().includes(searchLower))
-      );
-    }
-    
-    // Filter by tag if present
-    if (tagId) {
-      filtered = filtered.filter((restaurant) =>
-        restaurant.tags.some((tag: any) => tag.id === tagId)
-      );
-    }
-    // Apply sorting
-    if (sortBy === 'name') {
-      filtered.sort((a, b) => {
-        const comparison = a.name.localeCompare(b.name);
-        return sortDirection === 'asc' ? comparison : -comparison;
-      });
-    } else if (sortBy === 'rating') {
-      filtered.sort((a, b) => {
-        const comparison = a.rating - b.rating;
-        return sortDirection === 'asc' ? comparison : -comparison;
-      });
-    }
-    
-    setFilteredRestaurants(filtered);
-  }, [searchParams, sortBy, sortDirection, restaurants]);
+      // Filter by search query if present
+      if (query) {
+        const searchLower = query.toLowerCase();
+        filtered = filtered.filter(
+          (restaurant) =>
+            restaurant.name.toLowerCase().includes(searchLower) ||
+            restaurant.address.toLowerCase().includes(searchLower) ||
+            restaurant.tags.some((tag: any) => tag.name.toLowerCase().includes(searchLower))
+        );
+      }
+      
+      // Filter by tag if present
+      if (tagId) {
+        filtered = filtered.filter((restaurant) =>
+          restaurant.tags.some((tag: any) => tag.id === tagId)
+        );
+      }
+      // Apply sorting
+      if (sortBy === 'name') {
+        filtered.sort((a, b) => {
+          const comparison = a.name.localeCompare(b.name);
+          return sortDirection === 'asc' ? comparison : -comparison;
+        });
+      } else if (sortBy === 'rating') {
+        filtered.sort((a, b) => {
+          const comparison = a.rating - b.rating;
+          return sortDirection === 'asc' ? comparison : -comparison;
+        });
+      }
+      
+      setFilteredRestaurants(filtered);
+    }, [searchParams, sortBy, sortDirection, restaurants]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(event.target.value);
@@ -184,7 +187,7 @@ export default function RestaurantsPage() {
             <p className="text-lg text-gray-700">No coffee shops found matching your criteria.</p>
             <p className="text-gray-600 mt-2">Try a different search term or browse all shops.</p>
             <Link 
-              href="/restaurant"
+              href="/restaurant/info?id=%"
               className="mt-4 inline-block px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700"
             >
               View All Shops
@@ -197,7 +200,7 @@ export default function RestaurantsPage() {
             key={restaurant.id} 
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
           >
-            <div className="h-40 bg-gray-200 relative">
+            {/*<div className="h-40 bg-gray-200 relative">
               <Image
                 src={restaurant.image[0]}
                 alt={restaurant.name}
@@ -205,7 +208,7 @@ export default function RestaurantsPage() {
                 style={{ objectFit: "cover" }}
                 className="w-full h-full object-cover"
               />
-            </div>
+            </div>*/}
             <div className="p-6">
               <div className="flex justify-between items-start mb-2">
                 <h2 className="text-xl font-bold text-black">{restaurant.name}</h2>
@@ -216,22 +219,27 @@ export default function RestaurantsPage() {
               
               <p className="text-gray-600 mb-4">{restaurant.address}</p>
               
-              <div className="mb-4">
-                <p className="text-gray-700 font-medium">
-                  <span className="font-semibold">Phone:</span> {restaurant.phoneNumber}
-                </p>
-              </div>
+                  <div className="mb-4">
+                    {restaurant.phoneNumber ? (
+                      <p className="text-gray-700 font-medium">
+                        <span className="font-semibold">Phone:</span> {restaurant.phoneNumber}
+                      </p>
+                    ) : (
+                      <p className="text-gray-500 italic">Phone number not available</p>
+                    )}
+                  </div>
               
-              <div className="flex flex-wrap gap-2">
-                {restaurant.tags.map((tag: any) => (
-                  <span 
-                    key={tag.id} 
-                    className="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm"
-                  >
-                    {tag.name}
-                  </span>
-                ))}
-              </div>
+                <div className="flex flex-wrap gap-2">
+                  {Array.isArray(restaurant.tags) &&
+                    restaurant.tags.map((tag: any) => (
+                      <span 
+                        key={tag.id} 
+                        className="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm"
+                      >
+                        {tag.name}
+                      </span>
+                    ))}
+                </div>
               
               <div className="mt-6 pt-4 border-t border-gray-100">
                 <Link 

@@ -1,14 +1,19 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Fetch all restaurants.
  */
 export const fetchRestaurants = async () => {
-  const response = await fetch(`${BASE_URL}/restaurants`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch restaurants");
+  try {
+    const response = await fetch(`${BASE_URL}/restaurants`); // Use BASE_URL here
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching restaurants:', error);
+    throw error;
   }
-  return response.json();
 };
 
 /**

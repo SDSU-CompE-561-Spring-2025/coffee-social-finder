@@ -45,7 +45,7 @@ const [selectedShop, setSelectedShop] = useState<CoffeeShop | null>(null);
 
   // Function to create Google Maps URL for a location
   const getGoogleMapsEmbedUrl = (lat: number, lng: number) => {
-    return `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${lat},${lng}&zoom=15`;
+    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyDHGM3R750ovJDlLf7FpsOLvu00nncgEDo&q=${lat},${lng}&zoom=15`;
   };
 
   // Function to create Google Maps directions URL

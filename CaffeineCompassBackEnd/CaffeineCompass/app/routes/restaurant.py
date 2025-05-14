@@ -1,16 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.schemas.restaurant_schema import Restaurant, RestaurantCreate, RestaurantUpdate
-from app.crud.restaurant import get_restaurant, create_restaurant, update_restaurant, delete_restaurant
+from app.crud.restaurant import get_restaurant, create_restaurant, update_restaurant, delete_restaurant, get_all_restaurants
 from app.core.database import get_db
 
 router = APIRouter(prefix="/restaurants", tags=["restaurants"])
 
 
-@router.get("/restaurants")
-async def get_restaurants():
-    # Your logic to fetch and return coffee shops
-    return [{"id": "1", "name": "Coffee Shop 1"}]
+@router.get("/", response_model=list[Restaurant])
+def get_restaurants(db: Session = Depends(get_db)):
+    """
+    Fetch all restaurants from the database.
+    """
+    restaurants = get_all_restaurants(db)
+    return restaurants
 
 @router.get("/{restaurant_id}", response_model=Restaurant)
 def read_restaurant(restaurant_id: int, db: Session = Depends(get_db)):

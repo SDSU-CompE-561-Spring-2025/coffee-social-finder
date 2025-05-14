@@ -2,7 +2,9 @@ from fastapi import FastAPI, Request
 from app.core.database import engine, Base
 from app.routes import user, restaurant, comment, tag, address
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.security import OAuth2PasswordBearer
+from starlette.responses import RedirectResponse
 from app.core.auth import router as auth_router
 from app.core.config import config
 import time
@@ -44,7 +46,8 @@ origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
     "http://localhost",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://127.0.0.1:8000" 
 ]
 
 app.add_middleware(
@@ -54,6 +57,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+class TrailingSlashMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        if not request.url.path.endswith("/") and request.url.path != "/":
+            return RedirectResponse(url=f"{request.url.path}/")
+        return await call_next(request)
+
+app.add_middleware(TrailingSlashMiddleware)
 
 # Middleware to measure request processing time
 @app.middleware("http")

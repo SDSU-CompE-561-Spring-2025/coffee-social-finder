@@ -2,6 +2,12 @@ from sqlalchemy.orm import Session
 from typing import Optional
 from app.models.restaurant_tag import Restaurant
 
+def get_all_restaurants(db: Session):
+    """
+    Fetch all restaurants from the database.
+    """
+    return db.query(Restaurant).all()
+
 def get_restaurant(db: Session, restaurant_id: int):
     return db.query(Restaurant).filter(Restaurant.id == restaurant_id).first()
 
