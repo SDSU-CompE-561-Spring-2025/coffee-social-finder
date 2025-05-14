@@ -16,7 +16,7 @@ class Restaurant(Base):
     address = Column(String(200), nullable = False)
     name = Column(String(100), nullable=False)
     rating = Column(Integer)
-    phone_number = Column(String(15))
+    phonenumber = Column(String(15))
 
     #   comment this out for the test to work
     tags = relationship("Tag",secondary= restaurant_tag_association, back_populates = "restaurants")
