@@ -1,10 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.crud.user import get_user, get_users, create_user, update_user, delete_user
-from app.schemas.user_schema import UserBase, UserCreate, UserUpdate, UserOut
+from app.schemas.user_schema import UserCreate, UserUpdate, UserOut, UserResponse
 from app.core.database import get_db
 
 router = APIRouter()
+
+@router.post("/users", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+def create_user_endpoint(user: UserCreate, db: Session = Depends(get_db)):
+    return create_user(db, name=user.username, email=user.email, password=user.password)
 
 @router.get("/", response_model=list[UserOut])
 def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
@@ -16,12 +20,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=UserOut)
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
-    return create_user(
-        db=db,
-        name=user.username,  # or `user.name` if your model uses that
-        email=user.email,
-        password=user.password
-    )
+    return create_user(db, user)
 
 @router.put("/{user_id}", response_model=UserOut)
 def update_existing_user(user_id: int, user_update: UserUpdate, db: Session = Depends(get_db)):

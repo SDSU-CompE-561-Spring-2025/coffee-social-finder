@@ -6,7 +6,9 @@ class UserBase(BaseModel):
     email: EmailStr
     is_active: Optional[bool] = True
 
-class UserCreate(UserBase):
+class UserCreate(BaseModel):
+    username: str
+    email: EmailStr
     password: str
 
 class UserUpdate(BaseModel):
@@ -17,6 +19,12 @@ class UserUpdate(BaseModel):
 
 class UserOut(UserBase):
     id: int
+
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
 
     class Config:
         orm_mode = True

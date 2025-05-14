@@ -20,14 +20,29 @@ def get_user_by_email(db: Session, email: str):
     return db.query(User).filter(User.email == email).first()
 
 def create_user(db: Session, name: str, email: str, password: str):
+    # Validate input
+    if not name or not email or not password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Name, email, and password are required."
+        )
+
+    # Check if email already exists
     existing_user = db.query(User).filter(User.email == email).first()
     if existing_user:
-        raise ValueError("A user with this email already exists.")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="A user with this email already exists."
+        )
 
+    # Hash the password
+    hashed_password = get_password_hash(password)
+
+    # Create the user
     db_user = User(
         username=name,
         email=email,
-        hashed_password=get_password_hash(password)
+        hashed_password=hashed_password
     )
 
     try:
@@ -37,8 +52,10 @@ def create_user(db: Session, name: str, email: str, password: str):
         return db_user
     except IntegrityError as e:
         db.rollback()
-        raise ValueError("Could not create user: Email must be unique.") from e
-
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Could not create user. Ensure all fields are unique."
+        ) from e
 
 
 def update_user(db: Session, user_id: int, name: Optional[str] = None, 

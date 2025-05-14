@@ -40,7 +40,7 @@ async def create_user(db: db_dependency, create_user_request: CreateUser):
     user = User(
         username=create_user_request.username,
         email=create_user_request.email,
-        password=bcrypt_context.hash(create_user_request.password),
+        hashed_password=bcrypt_context.hash(create_user_request.password),  # Updated field name
         created_at=create_user_request.created_at,
     )
     db.add(user)
